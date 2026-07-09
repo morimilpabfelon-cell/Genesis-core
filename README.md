@@ -89,6 +89,14 @@ The instance may freely detect issues, score health, explain risks, block untrus
 
 Health reports are derived diagnostic views. They must reference evidence, conflicts, replay results, quarantine records, and proposed repairs. They are not source of truth.
 
+## Growth engine and self-improvement
+
+The growth engine has no artificial ceiling. The seed does not define a fixed maximum intelligence, fixed maximum memory, fixed maximum skill set, fixed provider, fixed device class, or fixed runtime shape.
+
+The instance may freely detect limitations, analyze failures, compare growth paths, request resources, draft capability blueprints, and prepare growth packages. These are thinking and preparation actions, not adopted changes.
+
+Adopting growth packages, enabling new capabilities, changing runtime structure, connecting governed resources, increasing external boundaries, or applying growth migrations requires guardian approval. The guardian opens the final door.
+
 ## Validation
 
 Run:
@@ -102,4 +110,5 @@ npm run test:approval
 npm run test:replay
 npm run test:privacy
 npm run test:health
+npm run test:growth
 ```
