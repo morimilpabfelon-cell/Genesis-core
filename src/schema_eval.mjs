@@ -16,9 +16,41 @@ function loadCases() {
     .map((line) => JSON.parse(line));
 }
 
+function clone(value) {
+  return JSON.parse(JSON.stringify(value));
+}
+
+function pathParts(dottedPath) {
+  return dottedPath.split(".").filter(Boolean);
+}
+
+function deletePath(target, dottedPath) {
+  const parts = pathParts(dottedPath);
+  const last = parts.pop();
+  let cursor = target;
+  for (const part of parts) {
+    if (!cursor || typeof cursor !== "object") return;
+    cursor = cursor[part];
+  }
+  if (cursor && typeof cursor === "object") delete cursor[last];
+}
+
+function setPath(target, dottedPath, value) {
+  const parts = pathParts(dottedPath);
+  const last = parts.pop();
+  let cursor = target;
+  for (const part of parts) {
+    if (!cursor[part] || typeof cursor[part] !== "object") cursor[part] = {};
+    cursor = cursor[part];
+  }
+  cursor[last] = value;
+}
+
 function caseData(testCase) {
-  if (testCase.data_ref) return readJson(testCase.data_ref);
-  return testCase.data;
+  const data = clone(testCase.data_ref ? readJson(testCase.data_ref) : testCase.data);
+  for (const dottedPath of testCase.remove || []) deletePath(data, dottedPath);
+  for (const [dottedPath, value] of Object.entries(testCase.set || {})) setPath(data, dottedPath, value);
+  return data;
 }
 
 const ajv = new Ajv2020({ allErrors: true, strict: true });
