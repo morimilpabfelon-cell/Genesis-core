@@ -1,0 +1,22 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://example.invalid/genesis-core/contracts/capability_blueprint.schema.json",
+  "title": "Capability Blueprint",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["blueprint_id", "instance_id", "capability_name", "purpose", "inputs", "outputs", "local_first_design", "governed_boundaries", "evaluation_plan", "rollback_plan", "evidence_refs", "created_at"],
+  "properties": {
+    "blueprint_id": { "type": "string", "minLength": 1 },
+    "instance_id": { "type": "string", "minLength": 1 },
+    "capability_name": { "type": "string", "minLength": 1 },
+    "purpose": { "type": "string", "minLength": 1 },
+    "inputs": { "type": "array", "items": { "type": "string" } },
+    "outputs": { "type": "array", "items": { "type": "string" } },
+    "local_first_design": { "type": "boolean", "const": true },
+    "governed_boundaries": { "type": "array", "items": { "type": "string" } },
+    "evaluation_plan": { "type": "array", "items": { "type": "string" }, "minItems": 1 },
+    "rollback_plan": { "type": "array", "items": { "type": "string" } },
+    "evidence_refs": { "type": "array", "items": { "type": "string" } },
+    "created_at": { "type": "string" }
+  }
+}
