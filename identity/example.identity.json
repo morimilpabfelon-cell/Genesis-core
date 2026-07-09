@@ -1,5 +1,5 @@
 {
-  "schema_version": "genesis.identity.v0.1",
+  "schema_version": "genesis.identity.v0.2",
   "seed_id": "genesis.core.seed",
   "seed_role": "LOCAL_FIRST_COMPANION_SEED",
   "guardian_placeholder": "{{GUARDIAN_NAME}}",
@@ -57,5 +57,72 @@
     "reasoning_provider": "contracts/reasoning_provider.schema.json",
     "migration_proposal": "contracts/migration_proposal.schema.json",
     "audit_event": "contracts/audit_event.schema.json"
+  },
+  "release_ref": "contracts/core_release_manifest.schema.json",
+  "versioning_ref": "VERSIONING_MODEL.md",
+  "module_refs": {
+    "living_memory": {
+      "module_version": "v0.2",
+      "ontology_refs": ["ontology/memory_kinds.md", "ontology/brain_architecture.md", "ontology/memory_lifecycle.md"],
+      "policy_refs": ["policy/memory_policy.rego"],
+      "contract_refs": ["contracts/living_memory_event.schema.json", "contracts/memory_link.schema.json", "contracts/memory_snapshot.schema.json", "contracts/recall_schedule.schema.json", "contracts/rest_cycle.schema.json", "contracts/local_reasoning_mode.schema.json", "contracts/brain_health_report.schema.json"],
+      "eval_refs": ["evals/living_memory_cases.jsonl"]
+    },
+    "provenance": {
+      "module_version": "v0.3",
+      "ontology_refs": ["ontology/epistemic_states.md", "ontology/provenance.md"],
+      "policy_refs": ["policy/provenance_policy.rego"],
+      "contract_refs": ["contracts/provenance_record.schema.json", "contracts/epistemic_memory_event.schema.json", "contracts/evidence_record.schema.json"],
+      "eval_refs": ["evals/provenance_cases.jsonl"]
+    },
+    "guardian_approval": {
+      "module_version": "v0.4",
+      "ontology_refs": ["ontology/guardian_approval.md"],
+      "policy_refs": ["policy/approval_policy.rego"],
+      "contract_refs": ["contracts/guardian_approval.schema.json", "contracts/approval_decision_event.schema.json"],
+      "eval_refs": ["evals/approval_cases.jsonl"]
+    },
+    "deterministic_replay": {
+      "module_version": "v0.5",
+      "ontology_refs": ["ontology/deterministic_replay.md"],
+      "policy_refs": ["policy/replay_policy.rego"],
+      "contract_refs": ["contracts/canonical_hash.schema.json", "contracts/replay_manifest.schema.json", "contracts/replay_result.schema.json", "contracts/replay_checkpoint.schema.json"],
+      "eval_refs": ["evals/replay_cases.jsonl"]
+    },
+    "privacy_lifecycle": {
+      "module_version": "v0.6",
+      "ontology_refs": ["ontology/privacy_lifecycle.md"],
+      "policy_refs": ["policy/privacy_policy.rego"],
+      "contract_refs": ["contracts/retention_rule.schema.json", "contracts/redaction_event.schema.json", "contracts/tombstone_event.schema.json", "contracts/privacy_access_request.schema.json"],
+      "eval_refs": ["evals/privacy_cases.jsonl"]
+    },
+    "brain_health": {
+      "module_version": "v0.7",
+      "ontology_refs": ["ontology/brain_health.md"],
+      "policy_refs": ["policy/health_policy.rego"],
+      "contract_refs": ["contracts/conflict_report.schema.json", "contracts/repair_proposal.schema.json", "contracts/health_check_result.schema.json"],
+      "eval_refs": ["evals/health_cases.jsonl"]
+    },
+    "growth_engine": {
+      "module_version": "v0.8",
+      "ontology_refs": ["ontology/growth_engine.md"],
+      "policy_refs": ["policy/growth_policy.rego"],
+      "contract_refs": ["contracts/self_improvement_signal.schema.json", "contracts/resource_request.schema.json", "contracts/capability_blueprint.schema.json", "contracts/growth_package.schema.json"],
+      "eval_refs": ["evals/growth_cases.jsonl"]
+    },
+    "seed_portability": {
+      "module_version": "v0.9",
+      "ontology_refs": ["ontology/seed_portability.md"],
+      "policy_refs": ["policy/seed_copy_policy.rego"],
+      "contract_refs": ["contracts/seed_copy_manifest.schema.json", "contracts/seed_verification_report.schema.json", "contracts/birth_handoff_package.schema.json"],
+      "eval_refs": ["evals/seed_copy_cases.jsonl"]
+    },
+    "release_freeze": {
+      "module_version": "v1.0",
+      "ontology_refs": ["ontology/release_freeze.md"],
+      "policy_refs": ["policy/release_policy.rego"],
+      "contract_refs": ["contracts/core_release_manifest.schema.json", "contracts/core_hardening_report.schema.json", "contracts/release_freeze_record.schema.json"],
+      "eval_refs": ["evals/release_cases.jsonl"]
+    }
   }
 }
