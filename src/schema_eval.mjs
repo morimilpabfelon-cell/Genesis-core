@@ -16,6 +16,11 @@ function loadCases() {
     .map((line) => JSON.parse(line));
 }
 
+function caseData(testCase) {
+  if (testCase.data_ref) return readJson(testCase.data_ref);
+  return testCase.data;
+}
+
 const ajv = new Ajv2020({ allErrors: true, strict: true });
 const compiled = new Map();
 
@@ -29,7 +34,7 @@ function validatorFor(schemaRel) {
 
 const results = loadCases().map((testCase) => {
   const validate = validatorFor(testCase.schema);
-  const actual = Boolean(validate(testCase.data));
+  const actual = Boolean(validate(caseData(testCase)));
   return {
     id: testCase.id,
     schema: testCase.schema,
