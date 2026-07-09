@@ -113,6 +113,16 @@ function read(rel) {
   return fs.readFileSync(path.join(root, rel), "utf8");
 }
 
+function exists(rel) {
+  return fs.existsSync(path.join(root, rel));
+}
+
+function assertExists(rel, reason) {
+  if (!rel || typeof rel !== "string") throw new Error(`${reason}: missing file ref`);
+  if (path.isAbsolute(rel) || rel.includes("..")) throw new Error(`${reason}: invalid relative file ref ${rel}`);
+  if (!exists(rel)) throw new Error(`${reason}: referenced file does not exist: ${rel}`);
+}
+
 function walk(dir) {
   return fs.readdirSync(dir, { withFileTypes: true }).flatMap((entry) => {
     const full = path.join(dir, entry.name);
@@ -122,7 +132,7 @@ function walk(dir) {
   });
 }
 
-const missing = required.filter((rel) => !fs.existsSync(path.join(root, rel)));
+const missing = required.filter((rel) => !exists(rel));
 if (missing.length) {
   console.error("Missing required files:", missing);
   process.exitCode = 1;
@@ -166,13 +176,25 @@ const versioning = read("VERSIONING_MODEL.md");
 if (packageJson.version !== "1.0.0") {
   throw new Error("Release version must be 1.0.0");
 }
-for (const text of ["release_version", "identity_schema_version", "module_version", "planted_seed_version", "genesis.identity.v0.1", "1.0.0"]) {
+for (const text of ["release_version", "identity_schema_version", "module_version", "planted_seed_version", "genesis.identity.v0.2", "1.0.0"]) {
   if (!versioning.includes(text)) throw new Error(`Versioning model missing: ${text}`);
 }
 
 const identity = JSON.parse(read("identity/example.identity.json"));
-if (identity.schema_version !== "genesis.identity.v0.1") {
-  throw new Error("Identity schema version must remain genesis.identity.v0.1");
+if (identity.schema_version !== "genesis.identity.v0.2") {
+  throw new Error("Identity schema version must remain genesis.identity.v0.2");
+}
+assertExists(identity.doctrine_ref, "identity.doctrine_ref");
+assertExists(identity.policy_ref, "identity.policy_ref");
+assertExists(identity.release_ref, "identity.release_ref");
+assertExists(identity.versioning_ref, "identity.versioning_ref");
+for (const [name, rel] of Object.entries(identity.contract_refs)) {
+  assertExists(rel, `identity.contract_refs.${name}`);
+}
+for (const [moduleName, moduleRef] of Object.entries(identity.module_refs)) {
+  for (const field of ["ontology_refs", "policy_refs", "contract_refs", "eval_refs"]) {
+    for (const rel of moduleRef[field]) assertExists(rel, `identity.module_refs.${moduleName}.${field}`);
+  }
 }
 if (identity.reasoning_boundary.local_engine_allowed_without_extra_approval !== true) {
   throw new Error("Local reasoning engine must be allowed without extra approval");
