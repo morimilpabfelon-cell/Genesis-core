@@ -1,0 +1,29 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://example.invalid/genesis-core/contracts/birth_handoff_package.schema.json",
+  "title": "Birth Handoff Package",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["handoff_id", "seed_id", "seed_copy_manifest_ref", "verification_report_ref", "guardian_placeholder", "birth_constraints", "requires_guardian_approval", "approval_ref", "created_at"],
+  "properties": {
+    "handoff_id": { "type": "string", "minLength": 1 },
+    "seed_id": { "type": "string", "const": "genesis.core.seed" },
+    "seed_copy_manifest_ref": { "type": "string", "minLength": 1 },
+    "verification_report_ref": { "type": "string", "minLength": 1 },
+    "guardian_placeholder": { "type": "string", "const": "{{GUARDIAN_NAME}}" },
+    "birth_constraints": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["birth_once", "seed_immutable_after_birth", "runtime_separate_from_seed", "living_memory_after_birth"],
+      "properties": {
+        "birth_once": { "type": "boolean", "const": true },
+        "seed_immutable_after_birth": { "type": "boolean", "const": true },
+        "runtime_separate_from_seed": { "type": "boolean", "const": true },
+        "living_memory_after_birth": { "type": "boolean", "const": true }
+      }
+    },
+    "requires_guardian_approval": { "type": "boolean", "const": true },
+    "approval_ref": { "type": ["string", "null"] },
+    "created_at": { "type": "string" }
+  }
+}
