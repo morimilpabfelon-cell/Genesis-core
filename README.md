@@ -51,6 +51,14 @@ The seed and living memory log are the source of truth. Snapshots, health report
 
 The local reasoning engine can retrieve local memory, rank relevant memories, summarize known state, answer from trusted local context, and state uncertainty without external services. External providers remain optional and governed.
 
+## Epistemology and provenance
+
+A memory is not automatically stable truth. Each claim must carry an epistemic state such as observed, asserted, inferred, confirmed, corrected, disputed, quarantined, or archived.
+
+Provenance records where a claim came from, who or what produced it, which evidence supports it, and whether it is guardian-confirmed, locally verified, external and untrusted, derived, or quarantine-only.
+
+External assertions may be recorded, but they are not confirmed by default. Quarantined memory is audit-visible but not trusted operating context. Derived views are useful, but they are not source of truth.
+
 ## Validation
 
 Run:
@@ -59,4 +67,5 @@ Run:
 npm run validate
 npm test
 npm run test:memory
+npm run test:provenance
 ```
