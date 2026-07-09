@@ -1,0 +1,22 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://example.invalid/genesis-core/contracts/seed_verification_report.schema.json",
+  "title": "Seed Verification Report",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["report_id", "manifest_id", "seed_id", "verified", "file_count", "hash_status", "doctrine_status", "policy_status", "contract_status", "blocked_terms_status", "errors", "created_at"],
+  "properties": {
+    "report_id": { "type": "string", "minLength": 1 },
+    "manifest_id": { "type": "string", "minLength": 1 },
+    "seed_id": { "type": "string", "const": "genesis.core.seed" },
+    "verified": { "type": "boolean" },
+    "file_count": { "type": "integer", "minimum": 0 },
+    "hash_status": { "type": "string", "enum": ["verified", "mismatch", "missing", "unknown"] },
+    "doctrine_status": { "type": "string", "enum": ["verified", "mismatch", "missing", "unknown"] },
+    "policy_status": { "type": "string", "enum": ["verified", "mismatch", "missing", "unknown"] },
+    "contract_status": { "type": "string", "enum": ["verified", "mismatch", "missing", "unknown"] },
+    "blocked_terms_status": { "type": "string", "enum": ["clean", "violations_found", "unknown"] },
+    "errors": { "type": "array", "items": { "type": "string" } },
+    "created_at": { "type": "string" }
+  }
+}
