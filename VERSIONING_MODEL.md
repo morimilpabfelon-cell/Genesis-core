@@ -7,7 +7,7 @@ Genesis-core uses layered versioning. A release version is not the same thing as
 | Layer | Meaning | Current value |
 | --- | --- | --- |
 | release_version | Version of the repository surface intended for verification, copy, and release freeze. | 1.0.0 |
-| identity_schema_version | Version of the identity seed document shape. | genesis.identity.v0.1 |
+| identity_schema_version | Version of the identity seed document shape. | genesis.identity.v0.2 |
 | module_version | Version of a specific constitutional module such as living memory, provenance, approval, replay, privacy, health, growth, seed copy, or release. | v0.x per module |
 | contract_version | Version implied by a contract schema file and its required fields. | file-local |
 | policy_version | Version implied by a policy file and its action sets. | file-local |
@@ -23,13 +23,15 @@ Genesis-core uses layered versioning. A release version is not the same thing as
 6. Runtime, app, platform, provider, and device versions are outside Genesis-core.
 7. Future growth is not blocked by a release freeze. Growth occurs through new releases, approved migrations, or living memory after birth.
 8. Guardian approval remains the final authority for adopting real changes.
+9. Identity release references declare which neutral modules belong to the release surface; they must not reference runtime, app, platform, provider, device, or product code.
 
 ## Compatibility rule
 
 The current release is compatible when:
 
 - release_version is 1.0.0
-- identity_schema_version is genesis.identity.v0.1
+- identity_schema_version is genesis.identity.v0.2
+- identity release references point only to neutral Genesis-core files
 - local reasoning remains available without external provider approval
 - external providers remain governed
 - runtime remains separate from seed
