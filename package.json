@@ -1,15 +1,16 @@
 {
   "name": "genesis-core",
-  "version": "0.6.0",
+  "version": "0.7.0",
   "type": "module",
   "private": true,
   "scripts": {
     "validate": "node src/validate_seed.mjs",
-    "test": "node src/eval_runner.mjs && node src/replay_eval.mjs && node src/privacy_policy_eval.mjs",
+    "test": "node src/eval_runner.mjs && node src/replay_eval.mjs && node src/privacy_policy_eval.mjs && node src/health_policy_eval.mjs",
     "test:memory": "node src/memory_policy_eval.mjs",
     "test:provenance": "node src/provenance_policy_eval.mjs",
     "test:approval": "node src/approval_policy_eval.mjs",
     "test:replay": "node src/replay_eval.mjs",
-    "test:privacy": "node src/privacy_policy_eval.mjs"
+    "test:privacy": "node src/privacy_policy_eval.mjs",
+    "test:health": "node src/health_policy_eval.mjs"
   }
 }
