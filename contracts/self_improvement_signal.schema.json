@@ -1,0 +1,19 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://example.invalid/genesis-core/contracts/self_improvement_signal.schema.json",
+  "title": "Self Improvement Signal",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["signal_id", "instance_id", "signal_type", "severity", "observed_limit", "impact", "evidence_refs", "suggested_next_step", "created_at"],
+  "properties": {
+    "signal_id": { "type": "string", "minLength": 1 },
+    "instance_id": { "type": "string", "minLength": 1 },
+    "signal_type": { "type": "string", "enum": ["capability_gap", "memory_gap", "reasoning_gap", "tool_gap", "runtime_gap", "resource_gap", "evaluation_gap", "policy_gap"] },
+    "severity": { "type": "string", "enum": ["info", "warning", "degraded", "critical"] },
+    "observed_limit": { "type": "string", "minLength": 1 },
+    "impact": { "type": "string", "minLength": 1 },
+    "evidence_refs": { "type": "array", "items": { "type": "string" } },
+    "suggested_next_step": { "type": "string", "enum": ["study", "design_option", "request_resource", "draft_capability", "propose_migration", "ask_guardian"] },
+    "created_at": { "type": "string" }
+  }
+}
