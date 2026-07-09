@@ -1,0 +1,33 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://example.invalid/genesis-core/contracts/knowledge_capsule.schema.json",
+  "title": "Knowledge Capsule",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "capsule_id",
+    "instance_id",
+    "source_event_hash",
+    "title",
+    "summary",
+    "claims",
+    "confidence",
+    "evidence",
+    "created_at",
+    "updated_at",
+    "capsule_hash"
+  ],
+  "properties": {
+    "capsule_id": { "type": "string", "minLength": 1 },
+    "instance_id": { "type": "string", "minLength": 1 },
+    "source_event_hash": { "type": "string", "pattern": "^sha256:.+" },
+    "title": { "type": "string", "minLength": 1 },
+    "summary": { "type": "string", "minLength": 1 },
+    "claims": { "type": "array", "items": { "type": "string" } },
+    "confidence": { "type": "integer", "minimum": 0, "maximum": 100 },
+    "evidence": { "type": "array", "items": { "type": "object" } },
+    "created_at": { "type": "string", "format": "date-time" },
+    "updated_at": { "type": "string", "format": "date-time" },
+    "capsule_hash": { "type": "string", "pattern": "^sha256:.+" }
+  }
+}
