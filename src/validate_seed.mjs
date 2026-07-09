@@ -15,6 +15,7 @@ const required = [
   "doctrine/evolution_rules.md",
   "policy/core_policy.rego",
   "policy/memory_policy.rego",
+  "policy/memory_policy_test.rego",
   "policy/provenance_policy.rego",
   "policy/approval_policy.rego",
   "policy/replay_policy.rego",
