@@ -19,6 +19,7 @@ const required = [
   "policy/health_policy.rego",
   "policy/growth_policy.rego",
   "policy/seed_copy_policy.rego",
+  "policy/release_policy.rego",
   "ontology/memory_kinds.md",
   "ontology/brain_architecture.md",
   "ontology/memory_lifecycle.md",
@@ -30,6 +31,7 @@ const required = [
   "ontology/brain_health.md",
   "ontology/growth_engine.md",
   "ontology/seed_portability.md",
+  "ontology/release_freeze.md",
   "contracts/memory_event.schema.json",
   "contracts/knowledge_capsule.schema.json",
   "contracts/reasoning_provider.schema.json",
@@ -65,6 +67,9 @@ const required = [
   "contracts/seed_copy_manifest.schema.json",
   "contracts/seed_verification_report.schema.json",
   "contracts/birth_handoff_package.schema.json",
+  "contracts/core_release_manifest.schema.json",
+  "contracts/core_hardening_report.schema.json",
+  "contracts/release_freeze_record.schema.json",
   "state/genesis_lifecycle.mermaid",
   "evals/genesis_core_cases.jsonl",
   "evals/living_memory_cases.jsonl",
@@ -75,6 +80,7 @@ const required = [
   "evals/health_cases.jsonl",
   "evals/growth_cases.jsonl",
   "evals/seed_copy_cases.jsonl",
+  "evals/release_cases.jsonl",
   "src/validate_seed.mjs",
   "src/eval_runner.mjs",
   "src/memory_policy_eval.mjs",
@@ -85,7 +91,8 @@ const required = [
   "src/privacy_policy_eval.mjs",
   "src/health_policy_eval.mjs",
   "src/growth_policy_eval.mjs",
-  "src/seed_copy_policy_eval.mjs"
+  "src/seed_copy_policy_eval.mjs",
+  "src/release_policy_eval.mjs"
 ];
 
 const blocked = [
@@ -245,6 +252,25 @@ if (handoff.properties.birth_constraints.properties.runtime_separate_from_seed.c
 }
 if (handoff.properties.requires_guardian_approval.const !== true) {
   throw new Error("Birth handoff use must require guardian approval");
+}
+
+const releaseManifest = JSON.parse(read("contracts/core_release_manifest.schema.json"));
+if (releaseManifest.properties.version.const !== "1.0.0") {
+  throw new Error("Release manifest must target version 1.0.0");
+}
+if (releaseManifest.properties.runtime_separation.const !== true) {
+  throw new Error("Release manifest must preserve runtime separation");
+}
+if (releaseManifest.properties.growth_boundary.const !== "no_artificial_ceiling_guardian_approval_for_adoption") {
+  throw new Error("Release manifest must preserve open-ended growth boundary");
+}
+
+const freezeRecord = JSON.parse(read("contracts/release_freeze_record.schema.json"));
+if (freezeRecord.properties.freeze_scope.const !== "neutral_seed_root_only") {
+  throw new Error("Release freeze must apply only to neutral seed root");
+}
+if (freezeRecord.properties.guardian_acknowledgement_required.const !== true) {
+  throw new Error("Release freeze must require guardian acknowledgement");
 }
 
 if (!process.exitCode) console.log("Genesis seed validation passed");
