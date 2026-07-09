@@ -9,6 +9,7 @@
     "validate:schema": "node src/schema_eval.mjs",
     "test": "node src/eval_runner.mjs && node src/schema_eval.mjs && node src/replay_eval.mjs && node src/privacy_policy_eval.mjs && node src/health_policy_eval.mjs && node src/growth_policy_eval.mjs && node src/seed_copy_policy_eval.mjs && node src/release_policy_eval.mjs",
     "test:memory": "node src/memory_policy_eval.mjs",
+    "test:rego": "opa test policy --fail-on-empty",
     "test:provenance": "node src/provenance_policy_eval.mjs",
     "test:approval": "node src/approval_policy_eval.mjs",
     "test:replay": "node src/replay_eval.mjs",
