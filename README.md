@@ -65,6 +65,14 @@ Guardian approval is the final door-opening mechanism for real change. The insta
 
 Approval is not a loose boolean. It must be scoped to actions, subject ids, policy basis, evidence, artifact hashes when needed, grant time, expiration, revocation state, and use limits. An approval for one action cannot authorize a different action, different subject, later session, or changed artifact.
 
+## Deterministic replay and canonical hashing
+
+Derived state must be reproducible from the verified seed and ordered append-only events. Snapshots, checkpoints, reports, and reasoning views are not source of truth unless they can be traced back to replayed source events.
+
+Canonical hashing uses deterministic JSON: object keys sorted lexicographically, arrays preserved in order, invalid runtime values rejected, and self-hash fields excluded before hashing. The default digest format is `sha256:<lowercase_hex_digest>`.
+
+A replay failure must not be hidden. If hashes, chain order, or derived state do not match, the affected derived view must be treated as untrusted and the raw event log must remain available for audit.
+
 ## Validation
 
 Run:
@@ -75,4 +83,5 @@ npm test
 npm run test:memory
 npm run test:provenance
 npm run test:approval
+npm run test:replay
 ```
