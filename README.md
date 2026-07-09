@@ -97,6 +97,14 @@ The instance may freely detect limitations, analyze failures, compare growth pat
 
 Adopting growth packages, enabling new capabilities, changing runtime structure, connecting governed resources, increasing external boundaries, or applying growth migrations requires guardian approval. The guardian opens the final door.
 
+## Seed portability and birth handoff
+
+Genesis-core remains separate from any runtime. A runtime may receive a verified copy of the seed, but it must not redefine the seed or treat runtime code as doctrine.
+
+A seed copy is valid only when required files are present, canonical hashes match, doctrine and policy references are preserved, blocked product and provider terms are absent, and the copy purpose is recorded.
+
+Using a copied seed for birth requires guardian approval. After birth, the planted copy becomes the immutable root for that instance. Later growth happens outside the seed as living memory, decisions, audits, and approved migrations.
+
 ## Validation
 
 Run:
@@ -111,4 +119,5 @@ npm run test:replay
 npm run test:privacy
 npm run test:health
 npm run test:growth
+npm run test:seed-copy
 ```
