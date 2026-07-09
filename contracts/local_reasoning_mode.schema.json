@@ -1,0 +1,18 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://example.invalid/genesis-core/contracts/local_reasoning_mode.schema.json",
+  "title": "Local Reasoning Mode",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["mode_id", "instance_id", "available_without_external_provider", "allowed_operations", "forbidden_operations", "memory_access_scope", "truthfulness_rules", "emergency_behavior"],
+  "properties": {
+    "mode_id": { "type": "string", "minLength": 1 },
+    "instance_id": { "type": "string", "minLength": 1 },
+    "available_without_external_provider": { "type": "boolean", "const": true },
+    "allowed_operations": { "type": "array", "items": { "type": "string", "enum": ["retrieve_local_memory", "rank_relevant_memory", "summarize_known_state", "answer_from_local_memory", "state_uncertainty", "prepare_questions_for_later"] } },
+    "forbidden_operations": { "type": "array", "items": { "type": "string", "enum": ["claim_external_knowledge_without_source", "rewrite_seed", "silently_change_memory", "pretend_external_provider_is_available"] } },
+    "memory_access_scope": { "type": "string", "enum": ["trusted_local_context", "guardian_visible_context", "audit_only_excluded"] },
+    "truthfulness_rules": { "type": "array", "items": { "type": "string" }, "minItems": 1 },
+    "emergency_behavior": { "type": "array", "items": { "type": "string" }, "minItems": 1 }
+  }
+}
