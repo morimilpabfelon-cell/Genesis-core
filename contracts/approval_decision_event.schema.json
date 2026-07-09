@@ -1,0 +1,19 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://example.invalid/genesis-core/contracts/approval_decision_event.schema.json",
+  "title": "Approval Decision Event",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["decision_id", "instance_id", "approval_id", "decision", "guardian_id", "subject_id", "reason", "evidence_refs", "created_at"],
+  "properties": {
+    "decision_id": { "type": "string", "minLength": 1 },
+    "instance_id": { "type": "string", "minLength": 1 },
+    "approval_id": { "type": "string", "minLength": 1 },
+    "decision": { "type": "string", "enum": ["granted", "rejected", "revoked", "expired", "used"] },
+    "guardian_id": { "type": "string", "minLength": 1 },
+    "subject_id": { "type": "string", "minLength": 1 },
+    "reason": { "type": "string", "minLength": 1 },
+    "evidence_refs": { "type": "array", "items": { "type": "string" } },
+    "created_at": { "type": "string" }
+  }
+}
