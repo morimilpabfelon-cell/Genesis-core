@@ -16,6 +16,7 @@ const required = [
   "policy/approval_policy.rego",
   "policy/replay_policy.rego",
   "policy/privacy_policy.rego",
+  "policy/health_policy.rego",
   "ontology/memory_kinds.md",
   "ontology/brain_architecture.md",
   "ontology/memory_lifecycle.md",
@@ -24,6 +25,7 @@ const required = [
   "ontology/guardian_approval.md",
   "ontology/deterministic_replay.md",
   "ontology/privacy_lifecycle.md",
+  "ontology/brain_health.md",
   "contracts/memory_event.schema.json",
   "contracts/knowledge_capsule.schema.json",
   "contracts/reasoning_provider.schema.json",
@@ -49,6 +51,9 @@ const required = [
   "contracts/redaction_event.schema.json",
   "contracts/tombstone_event.schema.json",
   "contracts/privacy_access_request.schema.json",
+  "contracts/conflict_report.schema.json",
+  "contracts/repair_proposal.schema.json",
+  "contracts/health_check_result.schema.json",
   "state/genesis_lifecycle.mermaid",
   "evals/genesis_core_cases.jsonl",
   "evals/living_memory_cases.jsonl",
@@ -56,6 +61,7 @@ const required = [
   "evals/approval_cases.jsonl",
   "evals/replay_cases.jsonl",
   "evals/privacy_cases.jsonl",
+  "evals/health_cases.jsonl",
   "src/validate_seed.mjs",
   "src/eval_runner.mjs",
   "src/memory_policy_eval.mjs",
@@ -63,7 +69,8 @@ const required = [
   "src/approval_policy_eval.mjs",
   "src/canonical_json.mjs",
   "src/replay_eval.mjs",
-  "src/privacy_policy_eval.mjs"
+  "src/privacy_policy_eval.mjs",
+  "src/health_policy_eval.mjs"
 ];
 
 const blocked = [
@@ -187,6 +194,16 @@ for (const field of ["target_id", "redacted_fields", "redaction_marker", "approv
 const tombstone = JSON.parse(read("contracts/tombstone_event.schema.json"));
 for (const field of ["target_id", "active_use_blocked", "audit_marker_preserved", "approval_ref", "tombstone_hash"]) {
   if (!tombstone.required.includes(field)) throw new Error(`Missing tombstone field: ${field}`);
+}
+
+const conflict = JSON.parse(read("contracts/conflict_report.schema.json"));
+for (const field of ["conflict_type", "severity", "claim_ids", "recommended_action", "evidence_refs"]) {
+  if (!conflict.required.includes(field)) throw new Error(`Missing conflict field: ${field}`);
+}
+
+const health = JSON.parse(read("contracts/health_check_result.schema.json"));
+for (const field of ["overall_status", "dimensions", "conflict_refs", "repair_proposal_refs", "blocked_context_refs"]) {
+  if (!health.required.includes(field)) throw new Error(`Missing health field: ${field}`);
 }
 
 if (!process.exitCode) console.log("Genesis seed validation passed");
