@@ -14,12 +14,14 @@ const required = [
   "policy/memory_policy.rego",
   "policy/provenance_policy.rego",
   "policy/approval_policy.rego",
+  "policy/replay_policy.rego",
   "ontology/memory_kinds.md",
   "ontology/brain_architecture.md",
   "ontology/memory_lifecycle.md",
   "ontology/epistemic_states.md",
   "ontology/provenance.md",
   "ontology/guardian_approval.md",
+  "ontology/deterministic_replay.md",
   "contracts/memory_event.schema.json",
   "contracts/knowledge_capsule.schema.json",
   "contracts/reasoning_provider.schema.json",
@@ -37,16 +39,23 @@ const required = [
   "contracts/evidence_record.schema.json",
   "contracts/guardian_approval.schema.json",
   "contracts/approval_decision_event.schema.json",
+  "contracts/canonical_hash.schema.json",
+  "contracts/replay_manifest.schema.json",
+  "contracts/replay_result.schema.json",
+  "contracts/replay_checkpoint.schema.json",
   "state/genesis_lifecycle.mermaid",
   "evals/genesis_core_cases.jsonl",
   "evals/living_memory_cases.jsonl",
   "evals/provenance_cases.jsonl",
   "evals/approval_cases.jsonl",
+  "evals/replay_cases.jsonl",
   "src/validate_seed.mjs",
   "src/eval_runner.mjs",
   "src/memory_policy_eval.mjs",
   "src/provenance_policy_eval.mjs",
-  "src/approval_policy_eval.mjs"
+  "src/approval_policy_eval.mjs",
+  "src/canonical_json.mjs",
+  "src/replay_eval.mjs"
 ];
 
 const blocked = [
@@ -147,6 +156,19 @@ for (const tier of ["guardian_confirmed", "local_verified", "external_untrusted"
 const approval = JSON.parse(read("contracts/guardian_approval.schema.json"));
 for (const field of ["approval_id", "guardian_id", "subject_id", "allowed_actions", "scope", "artifact_hashes", "evidence_refs", "expires_at", "revoked", "use_limit", "used_count"]) {
   if (!approval.required.includes(field)) throw new Error(`Missing approval field: ${field}`);
+}
+
+const canonicalHash = JSON.parse(read("contracts/canonical_hash.schema.json"));
+if (canonicalHash.properties.hash_algorithm.const !== "sha256") {
+  throw new Error("Canonical hash must use sha256");
+}
+if (canonicalHash.properties.canonicalization.const !== "genesis.canonical_json.v0.5") {
+  throw new Error("Canonicalization version mismatch");
+}
+
+const replayResult = JSON.parse(read("contracts/replay_result.schema.json"));
+for (const field of ["final_event_hash", "derived_snapshot_hash", "integrity_status", "errors"]) {
+  if (!replayResult.required.includes(field)) throw new Error(`Missing replay result field: ${field}`);
 }
 
 if (!process.exitCode) console.log("Genesis seed validation passed");
