@@ -1,0 +1,18 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://example.invalid/genesis-core/contracts/audit_event.schema.json",
+  "title": "Audit Event",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["audit_id", "instance_id", "event_type", "decision", "actor", "policy_rule", "evidence_refs", "created_at"],
+  "properties": {
+    "audit_id": { "type": "string", "minLength": 1 },
+    "instance_id": { "type": "string", "minLength": 1 },
+    "event_type": { "type": "string", "minLength": 1 },
+    "decision": { "type": "string", "enum": ["allowed", "denied", "approved", "rejected", "recorded"] },
+    "actor": { "type": "string", "enum": ["guardian", "instance", "system"] },
+    "policy_rule": { "type": "string", "minLength": 1 },
+    "evidence_refs": { "type": "array", "items": { "type": "string" } },
+    "created_at": { "type": "string" }
+  }
+}
