@@ -11,15 +11,28 @@ const required = [
   "doctrine/core_doctrine.md",
   "doctrine/evolution_rules.md",
   "policy/core_policy.rego",
+  "policy/memory_policy.rego",
+  "ontology/memory_kinds.md",
+  "ontology/brain_architecture.md",
+  "ontology/memory_lifecycle.md",
   "contracts/memory_event.schema.json",
   "contracts/knowledge_capsule.schema.json",
   "contracts/reasoning_provider.schema.json",
   "contracts/migration_proposal.schema.json",
   "contracts/audit_event.schema.json",
+  "contracts/living_memory_event.schema.json",
+  "contracts/memory_link.schema.json",
+  "contracts/memory_snapshot.schema.json",
+  "contracts/recall_schedule.schema.json",
+  "contracts/rest_cycle.schema.json",
+  "contracts/local_reasoning_mode.schema.json",
+  "contracts/brain_health_report.schema.json",
   "state/genesis_lifecycle.mermaid",
   "evals/genesis_core_cases.jsonl",
+  "evals/living_memory_cases.jsonl",
   "src/validate_seed.mjs",
-  "src/eval_runner.mjs"
+  "src/eval_runner.mjs",
+  "src/memory_policy_eval.mjs"
 ];
 
 const blocked = [
@@ -93,6 +106,17 @@ if (identity.reasoning_boundary.external_provider_requires_guardian_approval !==
 }
 if (identity.reasoning_boundary.provider_is_not_identity !== true || identity.reasoning_boundary.provider_is_not_memory !== true) {
   throw new Error("Provider must not be identity or memory");
+}
+
+const localMode = JSON.parse(read("contracts/local_reasoning_mode.schema.json"));
+const localModeConst = localMode.properties.available_without_external_provider.const;
+if (localModeConst !== true) {
+  throw new Error("Local reasoning mode must remain available without external provider");
+}
+
+const snapshot = JSON.parse(read("contracts/memory_snapshot.schema.json"));
+if (!snapshot.required.includes("included_event_ids") || !snapshot.required.includes("excluded_event_ids")) {
+  throw new Error("Snapshot must track included and excluded source events");
 }
 
 if (!process.exitCode) console.log("Genesis seed validation passed");
