@@ -125,11 +125,16 @@ Future growth remains possible through new versions, approved migrations, and li
 
 ## Validation
 
-Run:
+Run the stable local gates:
 
 ```bash
 npm run validate
 npm test
+```
+
+Run focused gates when diagnosing failures:
+
+```bash
 npm run validate:seed
 npm run validate:schema
 npm run test:memory
@@ -141,4 +146,10 @@ npm run test:health
 npm run test:growth
 npm run test:seed-copy
 npm run test:release
+```
+
+Run the native Rego gate when the OPA CLI is installed:
+
+```bash
+npm run test:rego
 ```
