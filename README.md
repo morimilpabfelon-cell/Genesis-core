@@ -81,6 +81,14 @@ Redaction does not silently edit the past. It appends a redaction event that poi
 
 Local privacy remains local-first. Exporting sensitive memory, restoring redacted content, broadening retrieval scope, or changing durable retention rules requires scoped guardian approval.
 
+## Brain health and conflict resolution
+
+Brain health is the instance's ability to inspect its own memory, derived views, policies, conflicts, privacy state, and replay integrity without pretending uncertainty is certainty.
+
+The instance may freely detect issues, score health, explain risks, block untrusted context, and prepare repair proposals. Applying corrections, resolving identity conflicts, restoring quarantined context, promoting disputed claims, or changing trusted derived views requires guardian approval.
+
+Health reports are derived diagnostic views. They must reference evidence, conflicts, replay results, quarantine records, and proposed repairs. They are not source of truth.
+
 ## Validation
 
 Run:
@@ -93,4 +101,5 @@ npm run test:provenance
 npm run test:approval
 npm run test:replay
 npm run test:privacy
+npm run test:health
 ```
