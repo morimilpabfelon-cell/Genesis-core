@@ -1,0 +1,65 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://example.invalid/genesis-core/identity/genesis.identity.schema.json",
+  "title": "Genesis Identity Seed",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "seed_id",
+    "seed_role",
+    "guardian_placeholder",
+    "birth_rules",
+    "memory_root_policy",
+    "reasoning_boundary",
+    "allowed_local_capabilities",
+    "governed_capabilities",
+    "forbidden_capabilities",
+    "doctrine_ref",
+    "policy_ref",
+    "contract_refs"
+  ],
+  "properties": {
+    "schema_version": { "type": "string", "const": "genesis.identity.v0.1" },
+    "seed_id": { "type": "string", "pattern": "^genesis\\.core\\.seed$" },
+    "seed_role": { "type": "string", "const": "LOCAL_FIRST_COMPANION_SEED" },
+    "guardian_placeholder": { "type": "string", "const": "{{GUARDIAN_NAME}}" },
+    "birth_rules": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["instance_name_assigned_at_birth", "birth_once", "seed_immutable_after_birth"],
+      "properties": {
+        "instance_name_assigned_at_birth": { "type": "boolean", "const": true },
+        "birth_once": { "type": "boolean", "const": true },
+        "seed_immutable_after_birth": { "type": "boolean", "const": true }
+      }
+    },
+    "memory_root_policy": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["local_first", "append_only_after_birth", "hash_link_required"],
+      "properties": {
+        "local_first": { "type": "boolean", "const": true },
+        "append_only_after_birth": { "type": "boolean", "const": true },
+        "hash_link_required": { "type": "boolean", "const": true }
+      }
+    },
+    "reasoning_boundary": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["local_engine_allowed_without_extra_approval", "external_provider_requires_guardian_approval", "provider_is_not_identity", "provider_is_not_memory"],
+      "properties": {
+        "local_engine_allowed_without_extra_approval": { "type": "boolean", "const": true },
+        "external_provider_requires_guardian_approval": { "type": "boolean", "const": true },
+        "provider_is_not_identity": { "type": "boolean", "const": true },
+        "provider_is_not_memory": { "type": "boolean", "const": true }
+      }
+    },
+    "allowed_local_capabilities": { "type": "array", "items": { "type": "string" }, "minItems": 1, "uniqueItems": true },
+    "governed_capabilities": { "type": "array", "items": { "type": "string" }, "minItems": 1, "uniqueItems": true },
+    "forbidden_capabilities": { "type": "array", "items": { "type": "string" }, "minItems": 1, "uniqueItems": true },
+    "doctrine_ref": { "type": "string" },
+    "policy_ref": { "type": "string" },
+    "contract_refs": { "type": "object", "additionalProperties": { "type": "string" } }
+  }
+}
