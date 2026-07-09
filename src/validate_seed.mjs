@@ -4,9 +4,11 @@ import path from "node:path";
 const root = process.cwd();
 
 const required = [
+  ".gitignore",
   "README.md",
   "VERSIONING_MODEL.md",
   "package.json",
+  "package-lock.json",
   "identity/genesis.identity.schema.json",
   "identity/example.identity.json",
   "doctrine/core_doctrine.md",
@@ -123,6 +125,23 @@ function assertExists(rel, reason) {
   if (!exists(rel)) throw new Error(`${reason}: referenced file does not exist: ${rel}`);
 }
 
+function assertPrefix(rel, prefix, reason) {
+  assertExists(rel, reason);
+  if (!rel.startsWith(prefix)) throw new Error(`${reason}: expected ${prefix} ref, got ${rel}`);
+}
+
+function assertDisjoint(leftName, left, rightName, right) {
+  const rightSet = new Set(right);
+  const overlap = left.filter((item) => rightSet.has(item));
+  if (overlap.length) throw new Error(`${leftName} overlaps ${rightName}: ${overlap.join(", ")}`);
+}
+
+function assertContainsAll(name, actual, expected) {
+  const actualSet = new Set(actual);
+  const missing = expected.filter((item) => !actualSet.has(item));
+  if (missing.length) throw new Error(`${name} missing required entries: ${missing.join(", ")}`);
+}
+
 function walk(dir) {
   return fs.readdirSync(dir, { withFileTypes: true }).flatMap((entry) => {
     const full = path.join(dir, entry.name);
@@ -157,7 +176,7 @@ for (const rel of required.filter((name) => name.endsWith(".jsonl"))) {
 const scanned = walk(root).filter((full) => /\.(md|json|jsonl|rego|mjs|mermaid)$/.test(full));
 const violations = [];
 for (const full of scanned) {
-  const rel = path.relative(root, full).replaceAll("\\\\", "/");
+  const rel = path.relative(root, full).replaceAll("\\", "/");
   const text = fs.readFileSync(full, "utf8");
   for (const term of blocked) {
     if (text.includes(term)) violations.push(`${rel}: ${term}`);
@@ -184,18 +203,50 @@ const identity = JSON.parse(read("identity/example.identity.json"));
 if (identity.schema_version !== "genesis.identity.v0.2") {
   throw new Error("Identity schema version must remain genesis.identity.v0.2");
 }
-assertExists(identity.doctrine_ref, "identity.doctrine_ref");
-assertExists(identity.policy_ref, "identity.policy_ref");
-assertExists(identity.release_ref, "identity.release_ref");
+
+assertPrefix(identity.doctrine_ref, "doctrine/", "identity.doctrine_ref");
+assertPrefix(identity.policy_ref, "policy/", "identity.policy_ref");
+assertPrefix(identity.release_ref, "contracts/", "identity.release_ref");
+if (identity.versioning_ref !== "VERSIONING_MODEL.md") throw new Error("identity.versioning_ref must be VERSIONING_MODEL.md");
 assertExists(identity.versioning_ref, "identity.versioning_ref");
+
 for (const [name, rel] of Object.entries(identity.contract_refs)) {
-  assertExists(rel, `identity.contract_refs.${name}`);
+  assertPrefix(rel, "contracts/", `identity.contract_refs.${name}`);
 }
-for (const [moduleName, moduleRef] of Object.entries(identity.module_refs)) {
-  for (const field of ["ontology_refs", "policy_refs", "contract_refs", "eval_refs"]) {
-    for (const rel of moduleRef[field]) assertExists(rel, `identity.module_refs.${moduleName}.${field}`);
+
+const expectedModules = {
+  living_memory: "v0.2",
+  provenance: "v0.3",
+  guardian_approval: "v0.4",
+  deterministic_replay: "v0.5",
+  privacy_lifecycle: "v0.6",
+  brain_health: "v0.7",
+  growth_engine: "v0.8",
+  seed_portability: "v0.9",
+  release_freeze: "v1.0"
+};
+
+const moduleNames = Object.keys(identity.module_refs);
+assertContainsAll("identity.module_refs", moduleNames, Object.keys(expectedModules));
+for (const moduleName of moduleNames) {
+  if (!expectedModules[moduleName]) throw new Error(`Unexpected module ref: ${moduleName}`);
+  const moduleRef = identity.module_refs[moduleName];
+  if (moduleRef.module_version !== expectedModules[moduleName]) {
+    throw new Error(`Module ${moduleName} expected ${expectedModules[moduleName]}, got ${moduleRef.module_version}`);
   }
+  for (const rel of moduleRef.ontology_refs) assertPrefix(rel, "ontology/", `identity.module_refs.${moduleName}.ontology_refs`);
+  for (const rel of moduleRef.policy_refs) assertPrefix(rel, "policy/", `identity.module_refs.${moduleName}.policy_refs`);
+  for (const rel of moduleRef.contract_refs) assertPrefix(rel, "contracts/", `identity.module_refs.${moduleName}.contract_refs`);
+  for (const rel of moduleRef.eval_refs) assertPrefix(rel, "evals/", `identity.module_refs.${moduleName}.eval_refs`);
 }
+
+assertDisjoint("allowed_local_capabilities", identity.allowed_local_capabilities, "governed_capabilities", identity.governed_capabilities);
+assertDisjoint("allowed_local_capabilities", identity.allowed_local_capabilities, "forbidden_capabilities", identity.forbidden_capabilities);
+assertDisjoint("governed_capabilities", identity.governed_capabilities, "forbidden_capabilities", identity.forbidden_capabilities);
+assertContainsAll("allowed_local_capabilities", identity.allowed_local_capabilities, ["read_local_memory", "write_local_memory_event", "use_local_reasoning_engine", "propose_migration"]);
+assertContainsAll("governed_capabilities", identity.governed_capabilities, ["use_external_reasoning_provider", "use_external_tool", "export_memory", "adopt_migration"]);
+assertContainsAll("forbidden_capabilities", identity.forbidden_capabilities, ["rewrite_seed", "silently_edit_memory", "silently_delete_memory", "grant_self_approval", "bypass_guardian_approval"]);
+
 if (identity.reasoning_boundary.local_engine_allowed_without_extra_approval !== true) {
   throw new Error("Local reasoning engine must be allowed without extra approval");
 }
