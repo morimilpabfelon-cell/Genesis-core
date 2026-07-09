@@ -17,6 +17,7 @@ const required = [
   "policy/replay_policy.rego",
   "policy/privacy_policy.rego",
   "policy/health_policy.rego",
+  "policy/growth_policy.rego",
   "ontology/memory_kinds.md",
   "ontology/brain_architecture.md",
   "ontology/memory_lifecycle.md",
@@ -26,6 +27,7 @@ const required = [
   "ontology/deterministic_replay.md",
   "ontology/privacy_lifecycle.md",
   "ontology/brain_health.md",
+  "ontology/growth_engine.md",
   "contracts/memory_event.schema.json",
   "contracts/knowledge_capsule.schema.json",
   "contracts/reasoning_provider.schema.json",
@@ -54,6 +56,10 @@ const required = [
   "contracts/conflict_report.schema.json",
   "contracts/repair_proposal.schema.json",
   "contracts/health_check_result.schema.json",
+  "contracts/self_improvement_signal.schema.json",
+  "contracts/resource_request.schema.json",
+  "contracts/capability_blueprint.schema.json",
+  "contracts/growth_package.schema.json",
   "state/genesis_lifecycle.mermaid",
   "evals/genesis_core_cases.jsonl",
   "evals/living_memory_cases.jsonl",
@@ -62,6 +68,7 @@ const required = [
   "evals/replay_cases.jsonl",
   "evals/privacy_cases.jsonl",
   "evals/health_cases.jsonl",
+  "evals/growth_cases.jsonl",
   "src/validate_seed.mjs",
   "src/eval_runner.mjs",
   "src/memory_policy_eval.mjs",
@@ -70,7 +77,8 @@ const required = [
   "src/canonical_json.mjs",
   "src/replay_eval.mjs",
   "src/privacy_policy_eval.mjs",
-  "src/health_policy_eval.mjs"
+  "src/health_policy_eval.mjs",
+  "src/growth_policy_eval.mjs"
 ];
 
 const blocked = [
@@ -204,6 +212,19 @@ for (const field of ["conflict_type", "severity", "claim_ids", "recommended_acti
 const health = JSON.parse(read("contracts/health_check_result.schema.json"));
 for (const field of ["overall_status", "dimensions", "conflict_refs", "repair_proposal_refs", "blocked_context_refs"]) {
   if (!health.required.includes(field)) throw new Error(`Missing health field: ${field}`);
+}
+
+const growthPackage = JSON.parse(read("contracts/growth_package.schema.json"));
+for (const field of ["growth_type", "signals", "resource_requests", "blueprints", "visible_changes", "evaluation_plan", "requires_guardian_approval", "status"]) {
+  if (!growthPackage.required.includes(field)) throw new Error(`Missing growth package field: ${field}`);
+}
+if (growthPackage.properties.requires_guardian_approval.const !== true) {
+  throw new Error("Growth package adoption must require guardian approval");
+}
+
+const blueprint = JSON.parse(read("contracts/capability_blueprint.schema.json"));
+if (blueprint.properties.local_first_design.const !== true) {
+  throw new Error("Capability blueprint must remain local-first by default");
 }
 
 if (!process.exitCode) console.log("Genesis seed validation passed");
