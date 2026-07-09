@@ -1,0 +1,21 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://example.invalid/genesis-core/contracts/rest_cycle.schema.json",
+  "title": "Rest Cycle",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["cycle_id", "instance_id", "started_at", "completed_at", "input_event_count", "actions", "new_links", "new_snapshots", "quarantined_events", "integrity_status", "summary"],
+  "properties": {
+    "cycle_id": { "type": "string", "minLength": 1 },
+    "instance_id": { "type": "string", "minLength": 1 },
+    "started_at": { "type": "string" },
+    "completed_at": { "type": ["string", "null"] },
+    "input_event_count": { "type": "integer", "minimum": 0 },
+    "actions": { "type": "array", "items": { "type": "string", "enum": ["deduplicate", "link", "summarize", "reinforce", "degrade", "quarantine", "propose_migration"] } },
+    "new_links": { "type": "array", "items": { "type": "string" } },
+    "new_snapshots": { "type": "array", "items": { "type": "string" } },
+    "quarantined_events": { "type": "array", "items": { "type": "string" } },
+    "integrity_status": { "type": "string", "enum": ["verified", "warning", "quarantine_created", "failed"] },
+    "summary": { "type": "string" }
+  }
+}
