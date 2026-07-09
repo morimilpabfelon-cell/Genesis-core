@@ -1,11 +1,12 @@
 {
   "name": "genesis-core",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "type": "module",
   "private": true,
   "scripts": {
     "validate": "node src/validate_seed.mjs",
     "test": "node src/eval_runner.mjs",
-    "test:memory": "node src/memory_policy_eval.mjs"
+    "test:memory": "node src/memory_policy_eval.mjs",
+    "test:provenance": "node src/provenance_policy_eval.mjs"
   }
 }
