@@ -17,10 +17,13 @@
     "forbidden_capabilities",
     "doctrine_ref",
     "policy_ref",
-    "contract_refs"
+    "contract_refs",
+    "release_ref",
+    "versioning_ref",
+    "module_refs"
   ],
   "properties": {
-    "schema_version": { "type": "string", "const": "genesis.identity.v0.1" },
+    "schema_version": { "type": "string", "const": "genesis.identity.v0.2" },
     "seed_id": { "type": "string", "pattern": "^genesis\\.core\\.seed$" },
     "seed_role": { "type": "string", "const": "LOCAL_FIRST_COMPANION_SEED" },
     "guardian_placeholder": { "type": "string", "const": "{{GUARDIAN_NAME}}" },
@@ -60,6 +63,38 @@
     "forbidden_capabilities": { "type": "array", "items": { "type": "string" }, "minItems": 1, "uniqueItems": true },
     "doctrine_ref": { "type": "string" },
     "policy_ref": { "type": "string" },
-    "contract_refs": { "type": "object", "additionalProperties": { "type": "string" } }
+    "contract_refs": { "type": "object", "additionalProperties": { "type": "string" } },
+    "release_ref": { "type": "string" },
+    "versioning_ref": { "type": "string", "const": "VERSIONING_MODEL.md" },
+    "module_refs": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["living_memory", "provenance", "guardian_approval", "deterministic_replay", "privacy_lifecycle", "brain_health", "growth_engine", "seed_portability", "release_freeze"],
+      "properties": {
+        "living_memory": { "$ref": "#/$defs/module_ref" },
+        "provenance": { "$ref": "#/$defs/module_ref" },
+        "guardian_approval": { "$ref": "#/$defs/module_ref" },
+        "deterministic_replay": { "$ref": "#/$defs/module_ref" },
+        "privacy_lifecycle": { "$ref": "#/$defs/module_ref" },
+        "brain_health": { "$ref": "#/$defs/module_ref" },
+        "growth_engine": { "$ref": "#/$defs/module_ref" },
+        "seed_portability": { "$ref": "#/$defs/module_ref" },
+        "release_freeze": { "$ref": "#/$defs/module_ref" }
+      }
+    }
+  },
+  "$defs": {
+    "module_ref": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["module_version", "ontology_refs", "policy_refs", "contract_refs", "eval_refs"],
+      "properties": {
+        "module_version": { "type": "string", "minLength": 1 },
+        "ontology_refs": { "type": "array", "items": { "type": "string" }, "minItems": 1, "uniqueItems": true },
+        "policy_refs": { "type": "array", "items": { "type": "string" }, "minItems": 1, "uniqueItems": true },
+        "contract_refs": { "type": "array", "items": { "type": "string" }, "minItems": 1, "uniqueItems": true },
+        "eval_refs": { "type": "array", "items": { "type": "string" }, "minItems": 1, "uniqueItems": true }
+      }
+    }
   }
 }
