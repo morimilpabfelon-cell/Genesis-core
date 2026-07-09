@@ -1,0 +1,19 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://example.invalid/genesis-core/contracts/canonical_hash.schema.json",
+  "title": "Canonical Hash",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["hash_id", "instance_id", "subject_id", "subject_type", "hash_algorithm", "canonicalization", "excluded_fields", "digest", "created_at"],
+  "properties": {
+    "hash_id": { "type": "string", "minLength": 1 },
+    "instance_id": { "type": "string", "minLength": 1 },
+    "subject_id": { "type": "string", "minLength": 1 },
+    "subject_type": { "type": "string", "enum": ["seed", "memory_event", "snapshot", "knowledge_capsule", "checkpoint", "replay_result", "approval", "migration_proposal"] },
+    "hash_algorithm": { "type": "string", "const": "sha256" },
+    "canonicalization": { "type": "string", "const": "genesis.canonical_json.v0.5" },
+    "excluded_fields": { "type": "array", "items": { "type": "string" } },
+    "digest": { "type": "string", "pattern": "^sha256:[a-f0-9]{64}$" },
+    "created_at": { "type": "string" }
+  }
+}
