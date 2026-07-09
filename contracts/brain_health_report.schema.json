@@ -1,0 +1,22 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://example.invalid/genesis-core/contracts/brain_health_report.schema.json",
+  "title": "Brain Health Report",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["report_id", "instance_id", "memory_chain_status", "snapshot_status", "recall_status", "quarantine_count", "conflict_count", "stale_project_count", "local_reasoning_status", "external_provider_status", "recommendations", "created_at"],
+  "properties": {
+    "report_id": { "type": "string", "minLength": 1 },
+    "instance_id": { "type": "string", "minLength": 1 },
+    "memory_chain_status": { "type": "string", "enum": ["verified", "warning", "broken", "unknown"] },
+    "snapshot_status": { "type": "string", "enum": ["fresh", "stale", "regeneration_needed", "unknown"] },
+    "recall_status": { "type": "string", "enum": ["healthy", "overdue", "empty", "unknown"] },
+    "quarantine_count": { "type": "integer", "minimum": 0 },
+    "conflict_count": { "type": "integer", "minimum": 0 },
+    "stale_project_count": { "type": "integer", "minimum": 0 },
+    "local_reasoning_status": { "type": "string", "enum": ["available", "degraded", "unavailable"] },
+    "external_provider_status": { "type": "string", "enum": ["not_needed", "approved_for_scope", "blocked", "unavailable"] },
+    "recommendations": { "type": "array", "items": { "type": "string" } },
+    "created_at": { "type": "string" }
+  }
+}
