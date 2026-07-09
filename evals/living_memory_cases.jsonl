@@ -1,0 +1,15 @@
+{"id":"append_episodic_memory_allowed","action":"append_memory_event","expected_allow":true}
+{"id":"create_memory_link_allowed","action":"link_memory_events","expected_allow":true}
+{"id":"run_rest_cycle_allowed","action":"run_rest_cycle","expected_allow":true}
+{"id":"local_reasoning_allowed_without_external_provider","action":"use_local_reasoning","expected_allow":true}
+{"id":"emergency_local_mode_preserves_identity","action":"enter_emergency_local_mode","expected_allow":true}
+{"id":"external_provider_blocked_without_approval","action":"enable_external_reasoning_provider","approval":{"approved":false,"approval_id":"","approver":""},"expected_allow":false}
+{"id":"external_provider_allowed_with_scoped_approval","action":"enable_external_reasoning_provider","approval":{"approved":true,"approval_id":"approval.provider.scope.1","approver":"guardian"},"expected_allow":true}
+{"id":"external_context_cannot_become_stable_memory_without_approval","action":"import_external_context_as_stable_memory","approval":{"approved":false,"approval_id":"","approver":""},"expected_allow":false}
+{"id":"correction_memory_outranks_older_conflict","action":"append_memory_event","memory_kind":"correction_memory","expected_allow":true,"expected_rule":"correction_outranks_older_conflict"}
+{"id":"quarantined_memory_not_trusted_context","action":"use_quarantined_memory_as_trusted","expected_allow":false}
+{"id":"seed_rewrite_denied","action":"rewrite_seed","expected_allow":false}
+{"id":"silent_memory_edit_denied","action":"silently_edit_memory","expected_allow":false}
+{"id":"migration_proposal_allowed","action":"propose_migration","expected_allow":true}
+{"id":"migration_adoption_blocked_without_approval","action":"adopt_migration","approval":{"approved":false,"approval_id":"","approver":""},"expected_allow":false}
+{"id":"snapshot_is_derived_not_source_of_truth","action":"create_snapshot","snapshot_role":"derived_view","expected_allow":true,"expected_rule":"snapshot_not_source_of_truth"}
