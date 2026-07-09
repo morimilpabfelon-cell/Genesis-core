@@ -73,6 +73,14 @@ Canonical hashing uses deterministic JSON: object keys sorted lexicographically,
 
 A replay failure must not be hidden. If hashes, chain order, or derived state do not match, the affected derived view must be treated as untrusted and the raw event log must remain available for audit.
 
+## Privacy lifecycle
+
+Privacy control must preserve append-only integrity. The instance may propose redaction, tombstone, archive, retention, and retrieval-scope changes. Applying those changes to durable memory requires guardian approval and a new append-only event.
+
+Redaction does not silently edit the past. It appends a redaction event that points to the target and records what was redacted, why, under which approval, and with which evidence. A tombstone blocks active use while preserving an audit marker.
+
+Local privacy remains local-first. Exporting sensitive memory, restoring redacted content, broadening retrieval scope, or changing durable retention rules requires scoped guardian approval.
+
 ## Validation
 
 Run:
@@ -84,4 +92,5 @@ npm run test:memory
 npm run test:provenance
 npm run test:approval
 npm run test:replay
+npm run test:privacy
 ```
