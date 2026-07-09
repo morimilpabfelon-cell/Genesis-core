@@ -1,0 +1,33 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://example.invalid/genesis-core/contracts/migration_proposal.schema.json",
+  "title": "Migration Proposal",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "proposal_id",
+    "instance_id",
+    "proposal_type",
+    "reason",
+    "visible_changes",
+    "risk_level",
+    "requires_guardian_approval",
+    "evaluation_plan",
+    "rollback_plan",
+    "status",
+    "created_at"
+  ],
+  "properties": {
+    "proposal_id": { "type": "string", "minLength": 1 },
+    "instance_id": { "type": "string", "minLength": 1 },
+    "proposal_type": { "type": "string", "enum": ["capability_growth", "memory_policy_change", "reasoning_change", "contract_upgrade", "runtime_upgrade"] },
+    "reason": { "type": "string", "minLength": 1 },
+    "visible_changes": { "type": "array", "items": { "type": "string" }, "minItems": 1 },
+    "risk_level": { "type": "string", "enum": ["low", "medium", "high", "critical"] },
+    "requires_guardian_approval": { "type": "boolean", "const": true },
+    "evaluation_plan": { "type": "array", "items": { "type": "string" }, "minItems": 1 },
+    "rollback_plan": { "type": "array", "items": { "type": "string" }, "minItems": 1 },
+    "status": { "type": "string", "enum": ["proposed", "approved", "rejected", "applied", "rolled_back"] },
+    "created_at": { "type": "string", "format": "date-time" }
+  }
+}
