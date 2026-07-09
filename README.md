@@ -29,6 +29,14 @@ External reasoning provider = optional governed computation, never identity or m
 Guardian = final approval authority for real changes.
 ```
 
+## Versioning model
+
+Genesis-core uses layered versioning. The release version, identity schema version, module versions, contract versions, policy versions, and planted seed version are separate concepts.
+
+The current release surface is `1.0.0`. The current identity seed document shape is `genesis.identity.v0.1`. Modules may keep their own v0.x history inside a 1.0.0 release. Runtime, app, platform, provider, and device versions are outside Genesis-core.
+
+See `VERSIONING_MODEL.md` for the compatibility rules.
+
 ## Local-first principle
 
 The instance must be able to preserve identity and operate from local memory without external services. Its own local reasoning engine is part of normal operation and does not need extra approval after birth.
@@ -119,6 +127,7 @@ Run:
 
 ```bash
 npm run validate
+npm run validate:schema
 npm test
 npm run test:memory
 npm run test:provenance
