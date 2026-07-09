@@ -1,0 +1,20 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://example.invalid/genesis-core/contracts/retention_rule.schema.json",
+  "title": "Retention Rule",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["rule_id", "instance_id", "target_kind", "target_selector", "lifecycle_state", "retrieval_scope", "requires_guardian_approval", "reason", "evidence_refs", "created_at"],
+  "properties": {
+    "rule_id": { "type": "string", "minLength": 1 },
+    "instance_id": { "type": "string", "minLength": 1 },
+    "target_kind": { "type": "string", "enum": ["memory_event", "knowledge_capsule", "snapshot", "provenance_record", "evidence_record", "approval_record"] },
+    "target_selector": { "type": "string", "minLength": 1 },
+    "lifecycle_state": { "type": "string", "enum": ["active", "limited", "redacted", "tombstoned", "archived", "quarantine_only", "export_approved"] },
+    "retrieval_scope": { "type": "string", "enum": ["normal_context", "limited_context", "audit_only", "not_retrievable", "export_scope"] },
+    "requires_guardian_approval": { "type": "boolean" },
+    "reason": { "type": "string", "minLength": 1 },
+    "evidence_refs": { "type": "array", "items": { "type": "string" } },
+    "created_at": { "type": "string" }
+  }
+}
