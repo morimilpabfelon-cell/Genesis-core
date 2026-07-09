@@ -1,0 +1,23 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://example.invalid/genesis-core/contracts/repair_proposal.schema.json",
+  "title": "Repair Proposal",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["repair_id", "instance_id", "target_type", "target_ids", "repair_type", "requires_guardian_approval", "reason", "visible_changes", "evaluation_plan", "rollback_plan", "evidence_refs", "status", "created_at"],
+  "properties": {
+    "repair_id": { "type": "string", "minLength": 1 },
+    "instance_id": { "type": "string", "minLength": 1 },
+    "target_type": { "type": "string", "enum": ["memory_conflict", "stale_snapshot", "quarantine_record", "stale_project", "capability_drift", "privacy_risk", "integrity_failure"] },
+    "target_ids": { "type": "array", "items": { "type": "string" }, "minItems": 1 },
+    "repair_type": { "type": "string", "enum": ["ask_guardian_confirmation", "append_correction", "quarantine_context", "refresh_snapshot", "run_replay", "degrade_confidence", "propose_migration", "apply_retention_rule"] },
+    "requires_guardian_approval": { "type": "boolean" },
+    "reason": { "type": "string", "minLength": 1 },
+    "visible_changes": { "type": "array", "items": { "type": "string" }, "minItems": 1 },
+    "evaluation_plan": { "type": "array", "items": { "type": "string" }, "minItems": 1 },
+    "rollback_plan": { "type": "array", "items": { "type": "string" } },
+    "evidence_refs": { "type": "array", "items": { "type": "string" } },
+    "status": { "type": "string", "enum": ["proposed", "approved", "rejected", "applied", "rolled_back"] },
+    "created_at": { "type": "string" }
+  }
+}
