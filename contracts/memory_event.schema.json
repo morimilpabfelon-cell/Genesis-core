@@ -1,0 +1,51 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://example.invalid/genesis-core/contracts/memory_event.schema.json",
+  "title": "Memory Event",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "event_id",
+    "instance_id",
+    "genesis_seed_hash",
+    "previous_event_hash",
+    "event_type",
+    "actor",
+    "source",
+    "body",
+    "importance",
+    "confidence",
+    "guardian_confirmed",
+    "evidence",
+    "created_at",
+    "event_hash"
+  ],
+  "properties": {
+    "event_id": { "type": "string", "minLength": 1 },
+    "instance_id": { "type": "string", "minLength": 1 },
+    "genesis_seed_hash": { "type": "string", "pattern": "^sha256:.+" },
+    "previous_event_hash": { "type": ["string", "null"] },
+    "event_type": { "type": "string", "minLength": 1 },
+    "actor": { "type": "string", "enum": ["guardian", "instance", "system"] },
+    "source": { "type": "string", "enum": ["local", "guardian", "system", "external_context", "reasoning_turn"] },
+    "body": { "type": "string", "minLength": 1 },
+    "importance": { "type": "integer", "minimum": 1, "maximum": 100 },
+    "confidence": { "type": "integer", "minimum": 0, "maximum": 100 },
+    "guardian_confirmed": { "type": "boolean" },
+    "evidence": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["evidence_type", "summary"],
+        "properties": {
+          "evidence_type": { "type": "string" },
+          "summary": { "type": "string" },
+          "digest": { "type": "string" }
+        }
+      }
+    },
+    "created_at": { "type": "string", "format": "date-time" },
+    "event_hash": { "type": "string", "pattern": "^sha256:.+" }
+  }
+}
