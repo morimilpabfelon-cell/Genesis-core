@@ -1,0 +1,18 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://example.invalid/genesis-core/contracts/replay_manifest.schema.json",
+  "title": "Replay Manifest",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["manifest_id", "instance_id", "seed_hash", "event_ids", "expected_final_event_hash", "expected_snapshot_hash", "derivation_policy_version", "created_at"],
+  "properties": {
+    "manifest_id": { "type": "string", "minLength": 1 },
+    "instance_id": { "type": "string", "minLength": 1 },
+    "seed_hash": { "type": "string", "pattern": "^sha256:[a-f0-9]{64}$" },
+    "event_ids": { "type": "array", "items": { "type": "string" } },
+    "expected_final_event_hash": { "type": "string", "pattern": "^sha256:[a-f0-9]{64}$" },
+    "expected_snapshot_hash": { "type": "string", "pattern": "^sha256:[a-f0-9]{64}$" },
+    "derivation_policy_version": { "type": "string", "minLength": 1 },
+    "created_at": { "type": "string" }
+  }
+}
