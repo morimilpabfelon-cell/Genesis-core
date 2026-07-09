@@ -129,8 +129,9 @@ Run:
 
 ```bash
 npm run validate
-npm run validate:schema
 npm test
+npm run validate:seed
+npm run validate:schema
 npm run test:memory
 npm run test:provenance
 npm run test:approval
