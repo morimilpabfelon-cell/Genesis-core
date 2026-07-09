@@ -1,0 +1,22 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://example.invalid/genesis-core/contracts/memory_snapshot.schema.json",
+  "title": "Memory Snapshot",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["snapshot_id", "instance_id", "seed_hash", "summary", "included_event_ids", "excluded_event_ids", "dominant_projects", "known_preferences", "active_warnings", "confidence", "created_at", "snapshot_hash"],
+  "properties": {
+    "snapshot_id": { "type": "string", "minLength": 1 },
+    "instance_id": { "type": "string", "minLength": 1 },
+    "seed_hash": { "type": "string", "pattern": "^sha256:.+" },
+    "summary": { "type": "string", "minLength": 1 },
+    "included_event_ids": { "type": "array", "items": { "type": "string" } },
+    "excluded_event_ids": { "type": "array", "items": { "type": "string" } },
+    "dominant_projects": { "type": "array", "items": { "type": "string" } },
+    "known_preferences": { "type": "array", "items": { "type": "string" } },
+    "active_warnings": { "type": "array", "items": { "type": "string" } },
+    "confidence": { "type": "integer", "minimum": 0, "maximum": 100 },
+    "created_at": { "type": "string" },
+    "snapshot_hash": { "type": "string", "pattern": "^sha256:.+" }
+  }
+}
