@@ -1,0 +1,21 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://example.invalid/genesis-core/contracts/replay_result.schema.json",
+  "title": "Replay Result",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["replay_id", "instance_id", "manifest_id", "event_count", "first_event_id", "last_event_id", "final_event_hash", "derived_snapshot_hash", "integrity_status", "errors", "created_at"],
+  "properties": {
+    "replay_id": { "type": "string", "minLength": 1 },
+    "instance_id": { "type": "string", "minLength": 1 },
+    "manifest_id": { "type": "string", "minLength": 1 },
+    "event_count": { "type": "integer", "minimum": 0 },
+    "first_event_id": { "type": ["string", "null"] },
+    "last_event_id": { "type": ["string", "null"] },
+    "final_event_hash": { "type": "string", "pattern": "^sha256:[a-f0-9]{64}$" },
+    "derived_snapshot_hash": { "type": "string", "pattern": "^sha256:[a-f0-9]{64}$" },
+    "integrity_status": { "type": "string", "enum": ["verified", "mismatch", "broken_chain", "invalid_input"] },
+    "errors": { "type": "array", "items": { "type": "string" } },
+    "created_at": { "type": "string" }
+  }
+}
