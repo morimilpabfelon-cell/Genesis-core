@@ -1,0 +1,32 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://example.invalid/genesis-core/contracts/core_hardening_report.schema.json",
+  "title": "Core Hardening Report",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["report_id", "seed_id", "version", "checks", "overall_status", "errors", "created_at"],
+  "properties": {
+    "report_id": { "type": "string", "minLength": 1 },
+    "seed_id": { "type": "string", "const": "genesis.core.seed" },
+    "version": { "type": "string", "const": "1.0.0" },
+    "checks": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["required_files", "json_parse", "jsonl_parse", "blocked_terms", "local_reasoning", "external_governance", "approval_boundary", "runtime_separation", "growth_boundary"],
+      "properties": {
+        "required_files": { "type": "string", "enum": ["passed", "failed", "unknown"] },
+        "json_parse": { "type": "string", "enum": ["passed", "failed", "unknown"] },
+        "jsonl_parse": { "type": "string", "enum": ["passed", "failed", "unknown"] },
+        "blocked_terms": { "type": "string", "enum": ["passed", "failed", "unknown"] },
+        "local_reasoning": { "type": "string", "enum": ["passed", "failed", "unknown"] },
+        "external_governance": { "type": "string", "enum": ["passed", "failed", "unknown"] },
+        "approval_boundary": { "type": "string", "enum": ["passed", "failed", "unknown"] },
+        "runtime_separation": { "type": "string", "enum": ["passed", "failed", "unknown"] },
+        "growth_boundary": { "type": "string", "enum": ["passed", "failed", "unknown"] }
+      }
+    },
+    "overall_status": { "type": "string", "enum": ["passed", "failed", "unknown"] },
+    "errors": { "type": "array", "items": { "type": "string" } },
+    "created_at": { "type": "string" }
+  }
+}
