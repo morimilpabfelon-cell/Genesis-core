@@ -1,0 +1,21 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://example.invalid/genesis-core/contracts/conflict_report.schema.json",
+  "title": "Conflict Report",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["conflict_id", "instance_id", "conflict_type", "severity", "claim_ids", "memory_event_ids", "description", "impact", "recommended_action", "evidence_refs", "created_at"],
+  "properties": {
+    "conflict_id": { "type": "string", "minLength": 1 },
+    "instance_id": { "type": "string", "minLength": 1 },
+    "conflict_type": { "type": "string", "enum": ["identity_conflict", "project_state_conflict", "semantic_conflict", "preference_conflict", "capability_conflict", "privacy_conflict", "integrity_conflict"] },
+    "severity": { "type": "string", "enum": ["info", "warning", "degraded", "critical"] },
+    "claim_ids": { "type": "array", "items": { "type": "string" }, "minItems": 1 },
+    "memory_event_ids": { "type": "array", "items": { "type": "string" } },
+    "description": { "type": "string", "minLength": 1 },
+    "impact": { "type": "string", "minLength": 1 },
+    "recommended_action": { "type": "string", "enum": ["state_uncertainty", "ask_guardian", "quarantine_context", "propose_correction", "propose_migration", "run_replay", "refresh_snapshot"] },
+    "evidence_refs": { "type": "array", "items": { "type": "string" } },
+    "created_at": { "type": "string" }
+  }
+}
