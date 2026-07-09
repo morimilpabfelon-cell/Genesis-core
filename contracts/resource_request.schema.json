@@ -1,0 +1,19 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://example.invalid/genesis-core/contracts/resource_request.schema.json",
+  "title": "Resource Request",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["request_id", "instance_id", "resource_type", "reason", "expected_benefit", "risk_notes", "requires_guardian_approval", "evidence_refs", "created_at"],
+  "properties": {
+    "request_id": { "type": "string", "minLength": 1 },
+    "instance_id": { "type": "string", "minLength": 1 },
+    "resource_type": { "type": "string", "enum": ["memory", "storage", "compute", "runtime_feature", "local_tool", "sensor", "local_reasoning_upgrade", "module", "external_service"] },
+    "reason": { "type": "string", "minLength": 1 },
+    "expected_benefit": { "type": "string", "minLength": 1 },
+    "risk_notes": { "type": "array", "items": { "type": "string" } },
+    "requires_guardian_approval": { "type": "boolean" },
+    "evidence_refs": { "type": "array", "items": { "type": "string" } },
+    "created_at": { "type": "string" }
+  }
+}
