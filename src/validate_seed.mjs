@@ -18,6 +18,7 @@ const required = [
   "policy/privacy_policy.rego",
   "policy/health_policy.rego",
   "policy/growth_policy.rego",
+  "policy/seed_copy_policy.rego",
   "ontology/memory_kinds.md",
   "ontology/brain_architecture.md",
   "ontology/memory_lifecycle.md",
@@ -28,6 +29,7 @@ const required = [
   "ontology/privacy_lifecycle.md",
   "ontology/brain_health.md",
   "ontology/growth_engine.md",
+  "ontology/seed_portability.md",
   "contracts/memory_event.schema.json",
   "contracts/knowledge_capsule.schema.json",
   "contracts/reasoning_provider.schema.json",
@@ -60,6 +62,9 @@ const required = [
   "contracts/resource_request.schema.json",
   "contracts/capability_blueprint.schema.json",
   "contracts/growth_package.schema.json",
+  "contracts/seed_copy_manifest.schema.json",
+  "contracts/seed_verification_report.schema.json",
+  "contracts/birth_handoff_package.schema.json",
   "state/genesis_lifecycle.mermaid",
   "evals/genesis_core_cases.jsonl",
   "evals/living_memory_cases.jsonl",
@@ -69,6 +74,7 @@ const required = [
   "evals/privacy_cases.jsonl",
   "evals/health_cases.jsonl",
   "evals/growth_cases.jsonl",
+  "evals/seed_copy_cases.jsonl",
   "src/validate_seed.mjs",
   "src/eval_runner.mjs",
   "src/memory_policy_eval.mjs",
@@ -78,7 +84,8 @@ const required = [
   "src/replay_eval.mjs",
   "src/privacy_policy_eval.mjs",
   "src/health_policy_eval.mjs",
-  "src/growth_policy_eval.mjs"
+  "src/growth_policy_eval.mjs",
+  "src/seed_copy_policy_eval.mjs"
 ];
 
 const blocked = [
@@ -225,6 +232,19 @@ if (growthPackage.properties.requires_guardian_approval.const !== true) {
 const blueprint = JSON.parse(read("contracts/capability_blueprint.schema.json"));
 if (blueprint.properties.local_first_design.const !== true) {
   throw new Error("Capability blueprint must remain local-first by default");
+}
+
+const seedCopy = JSON.parse(read("contracts/seed_copy_manifest.schema.json"));
+for (const field of ["seed_id", "seed_version", "source_ref", "copy_purpose", "file_hashes", "doctrine_refs", "policy_refs", "contract_refs"]) {
+  if (!seedCopy.required.includes(field)) throw new Error(`Missing seed copy field: ${field}`);
+}
+
+const handoff = JSON.parse(read("contracts/birth_handoff_package.schema.json"));
+if (handoff.properties.birth_constraints.properties.runtime_separate_from_seed.const !== true) {
+  throw new Error("Runtime must remain separate from seed");
+}
+if (handoff.properties.requires_guardian_approval.const !== true) {
+  throw new Error("Birth handoff use must require guardian approval");
 }
 
 if (!process.exitCode) console.log("Genesis seed validation passed");
