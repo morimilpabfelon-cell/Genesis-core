@@ -33,7 +33,9 @@ Guardian = final approval authority for real changes.
 
 Genesis-core uses layered versioning. The release version, identity schema version, module versions, contract versions, policy versions, and planted seed version are separate concepts.
 
-The current release surface is `1.0.0`. The current identity seed document shape is `genesis.identity.v0.1`. Modules may keep their own v0.x history inside a 1.0.0 release. Runtime, app, platform, provider, and device versions are outside Genesis-core.
+The current release surface is `1.0.0`. The current identity seed document shape is `genesis.identity.v0.2`. Modules may keep their own v0.x history inside a 1.0.0 release. Runtime, app, platform, provider, and device versions are outside Genesis-core.
+
+The identity seed declares release and module references so the neutral release surface is explicit and verifiable without making any runtime part of the core.
 
 See `VERSIONING_MODEL.md` for the compatibility rules.
 
