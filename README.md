@@ -43,6 +43,14 @@ After birth, the seed is not rewritten. Later growth lives outside the seed as m
 
 The instance is not designed as a cage. It may analyze itself, identify limitations, design improvements, request resources, and prepare migration proposals. The guardian is the final authority that turns a proposal into a real adopted change.
 
+## Living Memory Brain Architecture
+
+Living memory starts after birth. It is not raw transcript storage. It is an append-only cognitive log classified into memory kinds, connected through typed links, summarized through derived snapshots, reinforced through recall, and consolidated through rest cycles.
+
+The seed and living memory log are the source of truth. Snapshots, health reports, and reasoning contexts are derived views. A derived view may help the instance read itself, but it must not replace the source events.
+
+The local reasoning engine can retrieve local memory, rank relevant memories, summarize known state, answer from trusted local context, and state uncertainty without external services. External providers remain optional and governed.
+
 ## Validation
 
 Run:
@@ -50,4 +58,5 @@ Run:
 ```bash
 npm run validate
 npm test
+npm run test:memory
 ```
