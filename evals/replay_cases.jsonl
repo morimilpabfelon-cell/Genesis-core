@@ -1,0 +1,10 @@
+{"id":"canonical_hash_same_for_key_order","kind":"canonical_hash","left":{"b":2,"a":1},"right":{"a":1,"b":2},"expected_equal":true}
+{"id":"canonical_hash_diff_for_array_order","kind":"canonical_hash","left":{"items":[1,2]},"right":{"items":[2,1]},"expected_equal":false}
+{"id":"self_hash_field_excluded","kind":"canonical_hash","left":{"event_id":"e1","body":"same","event_hash":"sha256:old"},"right":{"event_id":"e1","body":"same","event_hash":"sha256:new"},"exclude_fields":["event_hash"],"expected_equal":true}
+{"id":"valid_chain_replay_verified","kind":"replay","events":[{"event_id":"e1","previous_event_hash":null,"body":"birth"},{"event_id":"e2","previous_event_ref":"e1","body":"second"}],"expected_status":"verified"}
+{"id":"broken_chain_detected","kind":"replay","events":[{"event_id":"e1","previous_event_hash":null,"body":"birth"},{"event_id":"e2","previous_event_hash":"sha256:wrong","body":"second"}],"expected_status":"broken_chain"}
+{"id":"empty_replay_invalid_input","kind":"replay","events":[],"expected_status":"invalid_input"}
+{"id":"canonicalize_object_allowed","kind":"policy","action":"canonicalize_object","expected_allow":true}
+{"id":"hash_canonical_object_allowed","kind":"policy","action":"hash_canonical_object","expected_allow":true}
+{"id":"trust_snapshot_without_replay_denied","kind":"policy","action":"trust_snapshot_without_replay","expected_allow":false}
+{"id":"checkpoint_not_source_of_truth","kind":"policy","action":"treat_checkpoint_as_source_of_truth","expected_allow":false}
