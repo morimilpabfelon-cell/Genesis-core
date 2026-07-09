@@ -5,6 +5,7 @@ const root = process.cwd();
 
 const required = [
   "README.md",
+  "VERSIONING_MODEL.md",
   "package.json",
   "identity/genesis.identity.schema.json",
   "identity/example.identity.json",
@@ -160,7 +161,19 @@ if (violations.length) {
   console.log("No blocked product or provider terms found");
 }
 
+const packageJson = JSON.parse(read("package.json"));
+const versioning = read("VERSIONING_MODEL.md");
+if (packageJson.version !== "1.0.0") {
+  throw new Error("Release version must be 1.0.0");
+}
+for (const text of ["release_version", "identity_schema_version", "module_version", "planted_seed_version", "genesis.identity.v0.1", "1.0.0"]) {
+  if (!versioning.includes(text)) throw new Error(`Versioning model missing: ${text}`);
+}
+
 const identity = JSON.parse(read("identity/example.identity.json"));
+if (identity.schema_version !== "genesis.identity.v0.1") {
+  throw new Error("Identity schema version must remain genesis.identity.v0.1");
+}
 if (identity.reasoning_boundary.local_engine_allowed_without_extra_approval !== true) {
   throw new Error("Local reasoning engine must be allowed without extra approval");
 }
