@@ -1,0 +1,21 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://example.invalid/genesis-core/contracts/tombstone_event.schema.json",
+  "title": "Tombstone Event",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["tombstone_id", "instance_id", "target_id", "target_type", "tombstone_reason", "active_use_blocked", "audit_marker_preserved", "approval_ref", "evidence_refs", "created_at", "tombstone_hash"],
+  "properties": {
+    "tombstone_id": { "type": "string", "minLength": 1 },
+    "instance_id": { "type": "string", "minLength": 1 },
+    "target_id": { "type": "string", "minLength": 1 },
+    "target_type": { "type": "string", "enum": ["memory_event", "knowledge_capsule", "evidence_record", "snapshot"] },
+    "tombstone_reason": { "type": "string", "minLength": 1 },
+    "active_use_blocked": { "type": "boolean", "const": true },
+    "audit_marker_preserved": { "type": "boolean", "const": true },
+    "approval_ref": { "type": "string", "minLength": 1 },
+    "evidence_refs": { "type": "array", "items": { "type": "string" } },
+    "created_at": { "type": "string" },
+    "tombstone_hash": { "type": "string", "pattern": "^sha256:[a-f0-9]{64}$" }
+  }
+}
