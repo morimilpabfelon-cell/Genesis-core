@@ -15,6 +15,7 @@ const required = [
   "policy/provenance_policy.rego",
   "policy/approval_policy.rego",
   "policy/replay_policy.rego",
+  "policy/privacy_policy.rego",
   "ontology/memory_kinds.md",
   "ontology/brain_architecture.md",
   "ontology/memory_lifecycle.md",
@@ -22,6 +23,7 @@ const required = [
   "ontology/provenance.md",
   "ontology/guardian_approval.md",
   "ontology/deterministic_replay.md",
+  "ontology/privacy_lifecycle.md",
   "contracts/memory_event.schema.json",
   "contracts/knowledge_capsule.schema.json",
   "contracts/reasoning_provider.schema.json",
@@ -43,19 +45,25 @@ const required = [
   "contracts/replay_manifest.schema.json",
   "contracts/replay_result.schema.json",
   "contracts/replay_checkpoint.schema.json",
+  "contracts/retention_rule.schema.json",
+  "contracts/redaction_event.schema.json",
+  "contracts/tombstone_event.schema.json",
+  "contracts/privacy_access_request.schema.json",
   "state/genesis_lifecycle.mermaid",
   "evals/genesis_core_cases.jsonl",
   "evals/living_memory_cases.jsonl",
   "evals/provenance_cases.jsonl",
   "evals/approval_cases.jsonl",
   "evals/replay_cases.jsonl",
+  "evals/privacy_cases.jsonl",
   "src/validate_seed.mjs",
   "src/eval_runner.mjs",
   "src/memory_policy_eval.mjs",
   "src/provenance_policy_eval.mjs",
   "src/approval_policy_eval.mjs",
   "src/canonical_json.mjs",
-  "src/replay_eval.mjs"
+  "src/replay_eval.mjs",
+  "src/privacy_policy_eval.mjs"
 ];
 
 const blocked = [
@@ -169,6 +177,16 @@ if (canonicalHash.properties.canonicalization.const !== "genesis.canonical_json.
 const replayResult = JSON.parse(read("contracts/replay_result.schema.json"));
 for (const field of ["final_event_hash", "derived_snapshot_hash", "integrity_status", "errors"]) {
   if (!replayResult.required.includes(field)) throw new Error(`Missing replay result field: ${field}`);
+}
+
+const redaction = JSON.parse(read("contracts/redaction_event.schema.json"));
+for (const field of ["target_id", "redacted_fields", "redaction_marker", "approval_ref", "redaction_hash"]) {
+  if (!redaction.required.includes(field)) throw new Error(`Missing redaction field: ${field}`);
+}
+
+const tombstone = JSON.parse(read("contracts/tombstone_event.schema.json"));
+for (const field of ["target_id", "active_use_blocked", "audit_marker_preserved", "approval_ref", "tombstone_hash"]) {
+  if (!tombstone.required.includes(field)) throw new Error(`Missing tombstone field: ${field}`);
 }
 
 if (!process.exitCode) console.log("Genesis seed validation passed");
