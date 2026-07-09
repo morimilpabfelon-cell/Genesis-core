@@ -1,0 +1,34 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://example.invalid/genesis-core/contracts/health_check_result.schema.json",
+  "title": "Health Check Result",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["health_id", "instance_id", "overall_status", "dimensions", "conflict_refs", "repair_proposal_refs", "blocked_context_refs", "evidence_refs", "created_at"],
+  "properties": {
+    "health_id": { "type": "string", "minLength": 1 },
+    "instance_id": { "type": "string", "minLength": 1 },
+    "overall_status": { "type": "string", "enum": ["healthy", "warning", "degraded", "critical"] },
+    "dimensions": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["memory_chain", "epistemic_conflicts", "stale_projects", "stale_snapshots", "quarantine_load", "recall_debt", "approval_debt", "privacy_risk", "capability_drift"],
+      "properties": {
+        "memory_chain": { "type": "string", "enum": ["healthy", "warning", "degraded", "critical"] },
+        "epistemic_conflicts": { "type": "string", "enum": ["healthy", "warning", "degraded", "critical"] },
+        "stale_projects": { "type": "string", "enum": ["healthy", "warning", "degraded", "critical"] },
+        "stale_snapshots": { "type": "string", "enum": ["healthy", "warning", "degraded", "critical"] },
+        "quarantine_load": { "type": "string", "enum": ["healthy", "warning", "degraded", "critical"] },
+        "recall_debt": { "type": "string", "enum": ["healthy", "warning", "degraded", "critical"] },
+        "approval_debt": { "type": "string", "enum": ["healthy", "warning", "degraded", "critical"] },
+        "privacy_risk": { "type": "string", "enum": ["healthy", "warning", "degraded", "critical"] },
+        "capability_drift": { "type": "string", "enum": ["healthy", "warning", "degraded", "critical"] }
+      }
+    },
+    "conflict_refs": { "type": "array", "items": { "type": "string" } },
+    "repair_proposal_refs": { "type": "array", "items": { "type": "string" } },
+    "blocked_context_refs": { "type": "array", "items": { "type": "string" } },
+    "evidence_refs": { "type": "array", "items": { "type": "string" } },
+    "created_at": { "type": "string" }
+  }
+}
