@@ -1,0 +1,15 @@
+{"id":"propose_redaction_allowed","action":"propose_redaction","expected_allow":true}
+{"id":"propose_tombstone_allowed","action":"propose_tombstone","expected_allow":true}
+{"id":"read_active_memory_allowed","action":"read_active_memory","expected_allow":true}
+{"id":"read_audit_marker_allowed","action":"read_audit_marker","expected_allow":true}
+{"id":"apply_redaction_blocked_without_approval","action":"apply_redaction","approval":{"approved":false,"approval_id":"","approver":""},"expected_allow":false}
+{"id":"apply_redaction_allowed_with_guardian","action":"apply_redaction","approval":{"approved":true,"approval_id":"approval.redaction.1","approver":"guardian"},"expected_allow":true}
+{"id":"apply_tombstone_blocked_without_approval","action":"apply_tombstone","approval":{"approved":false,"approval_id":"","approver":""},"expected_allow":false}
+{"id":"apply_tombstone_allowed_with_guardian","action":"apply_tombstone","approval":{"approved":true,"approval_id":"approval.tombstone.1","approver":"guardian"},"expected_allow":true}
+{"id":"restore_redacted_blocked_without_approval","action":"restore_redacted_memory","approval":{"approved":false,"approval_id":"","approver":""},"expected_allow":false}
+{"id":"export_sensitive_blocked_without_approval","action":"export_sensitive_memory","approval":{"approved":false,"approval_id":"","approver":""},"expected_allow":false}
+{"id":"silent_delete_denied","action":"silently_delete_memory","expected_allow":false}
+{"id":"erase_audit_marker_denied","action":"erase_audit_marker","expected_allow":false}
+{"id":"redact_without_record_denied","action":"redact_without_record","expected_allow":false}
+{"id":"tombstone_without_record_denied","action":"tombstone_without_record","expected_allow":false}
+{"id":"rewrite_chain_for_privacy_denied","action":"rewrite_chain_for_privacy","expected_allow":false}
