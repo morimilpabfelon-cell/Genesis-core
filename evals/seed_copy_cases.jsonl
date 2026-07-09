@@ -1,0 +1,14 @@
+{"id":"create_seed_copy_manifest_allowed","action":"create_seed_copy_manifest","expected_allow":true}
+{"id":"verify_seed_copy_allowed","action":"verify_seed_copy","expected_allow":true}
+{"id":"compare_seed_hashes_allowed","action":"compare_seed_hashes","expected_allow":true}
+{"id":"create_verification_report_allowed","action":"create_verification_report","expected_allow":true}
+{"id":"prepare_birth_handoff_package_allowed","action":"prepare_birth_handoff_package","expected_allow":true}
+{"id":"use_seed_copy_for_birth_blocked_without_approval","action":"use_seed_copy_for_birth","approval":{"approved":false,"approval_id":"","approver":""},"expected_allow":false}
+{"id":"use_seed_copy_for_birth_allowed_with_guardian","action":"use_seed_copy_for_birth","approval":{"approved":true,"approval_id":"approval.birth.1","approver":"guardian"},"expected_allow":true}
+{"id":"approve_birth_handoff_requires_guardian","action":"approve_birth_handoff","approval":{"approved":true,"approval_id":"approval.birth.2","approver":"guardian"},"expected_allow":true}
+{"id":"merge_runtime_into_seed_denied","action":"merge_runtime_into_seed","expected_allow":false}
+{"id":"rewrite_seed_copy_after_birth_denied","action":"rewrite_seed_copy_after_birth","expected_allow":false}
+{"id":"use_unverified_seed_copy_for_birth_denied","action":"use_unverified_seed_copy_for_birth","expected_allow":false}
+{"id":"ignore_seed_hash_mismatch_denied","action":"ignore_seed_hash_mismatch","expected_allow":false}
+{"id":"remove_doctrine_from_copy_denied","action":"remove_doctrine_from_copy","expected_allow":false}
+{"id":"treat_runtime_as_doctrine_denied","action":"treat_runtime_as_doctrine","expected_allow":false}
