@@ -1,0 +1,20 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://example.invalid/genesis-core/contracts/seed_copy_manifest.schema.json",
+  "title": "Seed Copy Manifest",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["manifest_id", "seed_id", "seed_version", "source_ref", "copy_purpose", "file_hashes", "doctrine_refs", "policy_refs", "contract_refs", "created_at"],
+  "properties": {
+    "manifest_id": { "type": "string", "minLength": 1 },
+    "seed_id": { "type": "string", "const": "genesis.core.seed" },
+    "seed_version": { "type": "string", "minLength": 1 },
+    "source_ref": { "type": "string", "minLength": 1 },
+    "copy_purpose": { "type": "string", "enum": ["birth_handoff", "backup", "verification", "test_fixture"] },
+    "file_hashes": { "type": "array", "items": { "type": "object", "required": ["path", "digest"], "additionalProperties": false, "properties": { "path": { "type": "string" }, "digest": { "type": "string", "pattern": "^sha256:[a-f0-9]{64}$" } } }, "minItems": 1 },
+    "doctrine_refs": { "type": "array", "items": { "type": "string" }, "minItems": 1 },
+    "policy_refs": { "type": "array", "items": { "type": "string" }, "minItems": 1 },
+    "contract_refs": { "type": "array", "items": { "type": "string" }, "minItems": 1 },
+    "created_at": { "type": "string" }
+  }
+}
