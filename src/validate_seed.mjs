@@ -83,6 +83,7 @@ const required = [
   "evals/release_cases.jsonl",
   "src/validate_seed.mjs",
   "src/eval_runner.mjs",
+  "src/policy_eval_engine.mjs",
   "src/memory_policy_eval.mjs",
   "src/provenance_policy_eval.mjs",
   "src/approval_policy_eval.mjs",
