@@ -1,0 +1,53 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://example.invalid/genesis-core/contracts/guardian_approval.schema.json",
+  "title": "Guardian Approval",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "approval_id",
+    "instance_id",
+    "guardian_id",
+    "subject_id",
+    "subject_type",
+    "allowed_actions",
+    "scope",
+    "reason",
+    "policy_basis",
+    "artifact_hashes",
+    "evidence_refs",
+    "granted_at",
+    "expires_at",
+    "revoked",
+    "use_limit",
+    "used_count"
+  ],
+  "properties": {
+    "approval_id": { "type": "string", "minLength": 1 },
+    "instance_id": { "type": "string", "minLength": 1 },
+    "guardian_id": { "type": "string", "minLength": 1 },
+    "subject_id": { "type": "string", "minLength": 1 },
+    "subject_type": { "type": "string", "enum": ["external_provider_turn", "external_tool_use", "memory_export", "external_context_import", "migration_proposal", "capability_change", "policy_change", "quarantine_recovery"] },
+    "allowed_actions": { "type": "array", "items": { "type": "string" }, "minItems": 1, "uniqueItems": true },
+    "scope": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["scope_type", "resource_ids", "max_effect", "notes"],
+      "properties": {
+        "scope_type": { "type": "string", "enum": ["single_turn", "single_action", "session", "artifact_bound"] },
+        "resource_ids": { "type": "array", "items": { "type": "string" } },
+        "max_effect": { "type": "string", "enum": ["read", "compute", "write_local", "external_effect", "structural_change"] },
+        "notes": { "type": "string" }
+      }
+    },
+    "reason": { "type": "string", "minLength": 1 },
+    "policy_basis": { "type": "array", "items": { "type": "string" }, "minItems": 1 },
+    "artifact_hashes": { "type": "array", "items": { "type": "string", "pattern": "^sha256:.+" } },
+    "evidence_refs": { "type": "array", "items": { "type": "string" }, "minItems": 1 },
+    "granted_at": { "type": "string" },
+    "expires_at": { "type": "string" },
+    "revoked": { "type": "boolean" },
+    "use_limit": { "type": "integer", "minimum": 1 },
+    "used_count": { "type": "integer", "minimum": 0 }
+  }
+}
