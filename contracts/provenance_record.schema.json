@@ -1,0 +1,20 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://example.invalid/genesis-core/contracts/provenance_record.schema.json",
+  "title": "Provenance Record",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["provenance_id", "instance_id", "subject_id", "subject_type", "source_category", "source_trust_tier", "produced_by", "evidence_refs", "derived_from", "created_at"],
+  "properties": {
+    "provenance_id": { "type": "string", "minLength": 1 },
+    "instance_id": { "type": "string", "minLength": 1 },
+    "subject_id": { "type": "string", "minLength": 1 },
+    "subject_type": { "type": "string", "enum": ["memory_event", "knowledge_capsule", "memory_link", "snapshot", "audit_event", "migration_proposal"] },
+    "source_category": { "type": "string", "enum": ["guardian", "instance", "system", "external_context", "tool_result", "derived_view"] },
+    "source_trust_tier": { "type": "string", "enum": ["guardian_confirmed", "local_verified", "local_unverified", "external_untrusted", "derived", "quarantine_only"] },
+    "produced_by": { "type": "string", "minLength": 1 },
+    "evidence_refs": { "type": "array", "items": { "type": "string" } },
+    "derived_from": { "type": "array", "items": { "type": "string" } },
+    "created_at": { "type": "string" }
+  }
+}
