@@ -1,0 +1,22 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://example.invalid/genesis-core/contracts/epistemic_memory_event.schema.json",
+  "title": "Epistemic Memory Event",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["event_id", "instance_id", "memory_kind", "epistemic_state", "claim", "source_trust_tier", "provenance_ref", "confidence", "supports", "contradicts", "supersedes", "created_at"],
+  "properties": {
+    "event_id": { "type": "string", "minLength": 1 },
+    "instance_id": { "type": "string", "minLength": 1 },
+    "memory_kind": { "type": "string", "enum": ["identity_memory", "episodic_memory", "semantic_memory", "project_memory", "preference_memory", "relationship_memory", "skill_memory", "correction_memory", "decision_memory", "warning_memory", "integrity_memory", "migration_memory"] },
+    "epistemic_state": { "type": "string", "enum": ["observed", "asserted", "inferred", "confirmed", "corrected", "disputed", "quarantined", "archived"] },
+    "claim": { "type": "string", "minLength": 1 },
+    "source_trust_tier": { "type": "string", "enum": ["guardian_confirmed", "local_verified", "local_unverified", "external_untrusted", "derived", "quarantine_only"] },
+    "provenance_ref": { "type": "string", "minLength": 1 },
+    "confidence": { "type": "integer", "minimum": 0, "maximum": 100 },
+    "supports": { "type": "array", "items": { "type": "string" } },
+    "contradicts": { "type": "array", "items": { "type": "string" } },
+    "supersedes": { "type": "array", "items": { "type": "string" } },
+    "created_at": { "type": "string" }
+  }
+}
