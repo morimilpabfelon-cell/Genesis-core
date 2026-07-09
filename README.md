@@ -105,6 +105,14 @@ A seed copy is valid only when required files are present, canonical hashes matc
 
 Using a copied seed for birth requires guardian approval. After birth, the planted copy becomes the immutable root for that instance. Later growth happens outside the seed as living memory, decisions, audits, and approved migrations.
 
+## Core hardening and release freeze
+
+Version 1.0.0 freezes the neutral seed surface for copying, verification, and birth handoff. This freeze is not a ceiling on future growth.
+
+The freeze applies only to the neutral seed root. It does not include runtime code, product code, platform code, device code, provider code, or user interface code.
+
+Future growth remains possible through new versions, approved migrations, and living memory outside the planted seed. The release preserves two boundaries: no artificial ceiling, and guardian approval for real adoption.
+
 ## Validation
 
 Run:
@@ -120,4 +128,5 @@ npm run test:privacy
 npm run test:health
 npm run test:growth
 npm run test:seed-copy
+npm run test:release
 ```
