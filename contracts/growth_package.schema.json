@@ -1,0 +1,24 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://example.invalid/genesis-core/contracts/growth_package.schema.json",
+  "title": "Growth Package",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["package_id", "instance_id", "growth_type", "signals", "resource_requests", "blueprints", "migration_refs", "risk_level", "visible_changes", "evaluation_plan", "rollback_plan", "requires_guardian_approval", "status", "created_at"],
+  "properties": {
+    "package_id": { "type": "string", "minLength": 1 },
+    "instance_id": { "type": "string", "minLength": 1 },
+    "growth_type": { "type": "string", "enum": ["capability_growth", "memory_growth", "reasoning_growth", "runtime_growth", "tool_growth", "policy_growth", "structural_growth"] },
+    "signals": { "type": "array", "items": { "type": "string" } },
+    "resource_requests": { "type": "array", "items": { "type": "string" } },
+    "blueprints": { "type": "array", "items": { "type": "string" } },
+    "migration_refs": { "type": "array", "items": { "type": "string" } },
+    "risk_level": { "type": "string", "enum": ["low", "medium", "high", "critical"] },
+    "visible_changes": { "type": "array", "items": { "type": "string" }, "minItems": 1 },
+    "evaluation_plan": { "type": "array", "items": { "type": "string" }, "minItems": 1 },
+    "rollback_plan": { "type": "array", "items": { "type": "string" } },
+    "requires_guardian_approval": { "type": "boolean", "const": true },
+    "status": { "type": "string", "enum": ["drafted", "submitted", "approved", "rejected", "applied", "rolled_back"] },
+    "created_at": { "type": "string" }
+  }
+}
