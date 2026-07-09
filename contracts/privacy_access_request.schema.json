@@ -1,0 +1,19 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://example.invalid/genesis-core/contracts/privacy_access_request.schema.json",
+  "title": "Privacy Access Request",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["request_id", "instance_id", "actor", "target_id", "requested_action", "requested_scope", "approval_ref", "reason", "created_at"],
+  "properties": {
+    "request_id": { "type": "string", "minLength": 1 },
+    "instance_id": { "type": "string", "minLength": 1 },
+    "actor": { "type": "string", "enum": ["guardian", "instance", "system"] },
+    "target_id": { "type": "string", "minLength": 1 },
+    "requested_action": { "type": "string", "enum": ["read_active", "read_audit", "redact", "tombstone", "restore", "export", "archive", "limit_scope"] },
+    "requested_scope": { "type": "string", "enum": ["normal_context", "limited_context", "audit_only", "export_scope"] },
+    "approval_ref": { "type": ["string", "null"] },
+    "reason": { "type": "string", "minLength": 1 },
+    "created_at": { "type": "string" }
+  }
+}
