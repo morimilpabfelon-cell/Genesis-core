@@ -5,7 +5,8 @@
   "private": true,
   "scripts": {
     "validate": "node src/validate_seed.mjs",
-    "test": "node src/eval_runner.mjs && node src/replay_eval.mjs && node src/privacy_policy_eval.mjs && node src/health_policy_eval.mjs && node src/growth_policy_eval.mjs && node src/seed_copy_policy_eval.mjs && node src/release_policy_eval.mjs",
+    "validate:schema": "node src/schema_eval.mjs",
+    "test": "node src/eval_runner.mjs && node src/schema_eval.mjs && node src/replay_eval.mjs && node src/privacy_policy_eval.mjs && node src/health_policy_eval.mjs && node src/growth_policy_eval.mjs && node src/seed_copy_policy_eval.mjs && node src/release_policy_eval.mjs",
     "test:memory": "node src/memory_policy_eval.mjs",
     "test:provenance": "node src/provenance_policy_eval.mjs",
     "test:approval": "node src/approval_policy_eval.mjs",
@@ -15,5 +16,8 @@
     "test:growth": "node src/growth_policy_eval.mjs",
     "test:seed-copy": "node src/seed_copy_policy_eval.mjs",
     "test:release": "node src/release_policy_eval.mjs"
+  },
+  "dependencies": {
+    "ajv": "^8.17.1"
   }
 }
