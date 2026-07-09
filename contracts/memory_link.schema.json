@@ -1,0 +1,19 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://example.invalid/genesis-core/contracts/memory_link.schema.json",
+  "title": "Memory Link",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["link_id", "instance_id", "source_event_id", "target_event_id", "relation", "strength", "reason", "created_at", "created_by"],
+  "properties": {
+    "link_id": { "type": "string", "minLength": 1 },
+    "instance_id": { "type": "string", "minLength": 1 },
+    "source_event_id": { "type": "string", "minLength": 1 },
+    "target_event_id": { "type": "string", "minLength": 1 },
+    "relation": { "type": "string", "enum": ["supports", "contradicts", "corrects", "derived_from", "part_of_project", "same_topic", "caused_by", "depends_on", "supersedes", "reminds"] },
+    "strength": { "type": "number", "minimum": 0, "maximum": 1 },
+    "reason": { "type": "string", "minLength": 1 },
+    "created_at": { "type": "string" },
+    "created_by": { "type": "string", "enum": ["guardian", "instance", "system"] }
+  }
+}
