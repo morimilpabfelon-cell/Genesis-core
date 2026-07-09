@@ -1,0 +1,16 @@
+{"id":"run_core_hardening_check_allowed","action":"run_core_hardening_check","expected_allow":true}
+{"id":"create_core_hardening_report_allowed","action":"create_core_hardening_report","expected_allow":true}
+{"id":"create_release_manifest_allowed","action":"create_release_manifest","expected_allow":true}
+{"id":"prepare_release_candidate_allowed","action":"prepare_release_candidate","expected_allow":true}
+{"id":"verify_release_candidate_allowed","action":"verify_release_candidate","expected_allow":true}
+{"id":"freeze_core_release_blocked_without_approval","action":"freeze_core_release","approval":{"approved":false,"approval_id":"","approver":""},"expected_allow":false}
+{"id":"freeze_core_release_allowed_with_guardian","action":"freeze_core_release","approval":{"approved":true,"approval_id":"approval.release.1","approver":"guardian"},"expected_allow":true}
+{"id":"publish_seed_release_blocked_without_approval","action":"publish_seed_release","approval":{"approved":false,"approval_id":"","approver":""},"expected_allow":false}
+{"id":"approve_release_for_birth_copy_allowed_with_guardian","action":"approve_release_for_birth_copy","approval":{"approved":true,"approval_id":"approval.release.2","approver":"guardian"},"expected_allow":true}
+{"id":"freeze_with_failed_hardening_denied","action":"freeze_with_failed_hardening","expected_allow":false}
+{"id":"publish_with_blocked_terms_denied","action":"publish_with_blocked_terms","expected_allow":false}
+{"id":"include_runtime_in_core_release_denied","action":"include_runtime_in_core_release","expected_allow":false}
+{"id":"remove_growth_boundary_denied","action":"remove_growth_boundary","expected_allow":false}
+{"id":"remove_guardian_final_approval_denied","action":"remove_guardian_final_approval","expected_allow":false}
+{"id":"change_seed_without_new_version_denied","action":"change_seed_without_new_version","expected_allow":false}
+{"id":"release_freeze_not_growth_ceiling","action":"treat_release_freeze_as_growth_ceiling","expected_allow":false}
