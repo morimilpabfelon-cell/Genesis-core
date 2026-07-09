@@ -1,0 +1,22 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://example.invalid/genesis-core/contracts/core_release_manifest.schema.json",
+  "title": "Core Release Manifest",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["release_id", "seed_id", "version", "status", "file_refs", "validation_commands", "eval_commands", "neutrality_check", "runtime_separation", "growth_boundary", "known_limitations", "created_at"],
+  "properties": {
+    "release_id": { "type": "string", "minLength": 1 },
+    "seed_id": { "type": "string", "const": "genesis.core.seed" },
+    "version": { "type": "string", "const": "1.0.0" },
+    "status": { "type": "string", "enum": ["draft", "candidate", "released", "superseded"] },
+    "file_refs": { "type": "array", "items": { "type": "string" }, "minItems": 1 },
+    "validation_commands": { "type": "array", "items": { "type": "string" }, "minItems": 1 },
+    "eval_commands": { "type": "array", "items": { "type": "string" }, "minItems": 1 },
+    "neutrality_check": { "type": "string", "enum": ["clean", "violations_found", "unknown"] },
+    "runtime_separation": { "type": "boolean", "const": true },
+    "growth_boundary": { "type": "string", "const": "no_artificial_ceiling_guardian_approval_for_adoption" },
+    "known_limitations": { "type": "array", "items": { "type": "string" } },
+    "created_at": { "type": "string" }
+  }
+}
