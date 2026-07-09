@@ -1,0 +1,19 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://example.invalid/genesis-core/contracts/release_freeze_record.schema.json",
+  "title": "Release Freeze Record",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["freeze_id", "seed_id", "version", "release_manifest_ref", "hardening_report_ref", "freeze_scope", "future_change_path", "guardian_acknowledgement_required", "created_at"],
+  "properties": {
+    "freeze_id": { "type": "string", "minLength": 1 },
+    "seed_id": { "type": "string", "const": "genesis.core.seed" },
+    "version": { "type": "string", "const": "1.0.0" },
+    "release_manifest_ref": { "type": "string", "minLength": 1 },
+    "hardening_report_ref": { "type": "string", "minLength": 1 },
+    "freeze_scope": { "type": "string", "const": "neutral_seed_root_only" },
+    "future_change_path": { "type": "string", "enum": ["new_version", "approved_migration", "living_memory_after_birth"] },
+    "guardian_acknowledgement_required": { "type": "boolean", "const": true },
+    "created_at": { "type": "string" }
+  }
+}
