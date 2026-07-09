@@ -13,11 +13,13 @@ const required = [
   "policy/core_policy.rego",
   "policy/memory_policy.rego",
   "policy/provenance_policy.rego",
+  "policy/approval_policy.rego",
   "ontology/memory_kinds.md",
   "ontology/brain_architecture.md",
   "ontology/memory_lifecycle.md",
   "ontology/epistemic_states.md",
   "ontology/provenance.md",
+  "ontology/guardian_approval.md",
   "contracts/memory_event.schema.json",
   "contracts/knowledge_capsule.schema.json",
   "contracts/reasoning_provider.schema.json",
@@ -33,14 +35,18 @@ const required = [
   "contracts/provenance_record.schema.json",
   "contracts/epistemic_memory_event.schema.json",
   "contracts/evidence_record.schema.json",
+  "contracts/guardian_approval.schema.json",
+  "contracts/approval_decision_event.schema.json",
   "state/genesis_lifecycle.mermaid",
   "evals/genesis_core_cases.jsonl",
   "evals/living_memory_cases.jsonl",
   "evals/provenance_cases.jsonl",
+  "evals/approval_cases.jsonl",
   "src/validate_seed.mjs",
   "src/eval_runner.mjs",
   "src/memory_policy_eval.mjs",
-  "src/provenance_policy_eval.mjs"
+  "src/provenance_policy_eval.mjs",
+  "src/approval_policy_eval.mjs"
 ];
 
 const blocked = [
@@ -136,6 +142,11 @@ const provenance = JSON.parse(read("contracts/provenance_record.schema.json"));
 const trustTiers = provenance.properties.source_trust_tier.enum;
 for (const tier of ["guardian_confirmed", "local_verified", "external_untrusted", "derived", "quarantine_only"]) {
   if (!trustTiers.includes(tier)) throw new Error(`Missing source trust tier: ${tier}`);
+}
+
+const approval = JSON.parse(read("contracts/guardian_approval.schema.json"));
+for (const field of ["approval_id", "guardian_id", "subject_id", "allowed_actions", "scope", "artifact_hashes", "evidence_refs", "expires_at", "revoked", "use_limit", "used_count"]) {
+  if (!approval.required.includes(field)) throw new Error(`Missing approval field: ${field}`);
 }
 
 if (!process.exitCode) console.log("Genesis seed validation passed");
