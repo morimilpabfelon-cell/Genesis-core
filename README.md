@@ -59,6 +59,12 @@ Provenance records where a claim came from, who or what produced it, which evide
 
 External assertions may be recorded, but they are not confirmed by default. Quarantined memory is audit-visible but not trusted operating context. Derived views are useful, but they are not source of truth.
 
+## Guardian approval
+
+Guardian approval is the final door-opening mechanism for real change. The instance may freely think, analyze, design, compare, propose, and prepare. Approval is required when a proposal becomes a real adopted change, uses a governed capability, changes durable state, or crosses a non-local boundary.
+
+Approval is not a loose boolean. It must be scoped to actions, subject ids, policy basis, evidence, artifact hashes when needed, grant time, expiration, revocation state, and use limits. An approval for one action cannot authorize a different action, different subject, later session, or changed artifact.
+
 ## Validation
 
 Run:
@@ -68,4 +74,5 @@ npm run validate
 npm test
 npm run test:memory
 npm run test:provenance
+npm run test:approval
 ```
